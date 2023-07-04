@@ -1,24 +1,18 @@
 const express = require('express')
-const router = express.Router()
-const path = require('path')
 const db_config = require('../config/database')
+const oracledb = require('oracledb')
+const path = require('path')
+const router = express.Router()
 
-const connPromise = db_config.connect()
+// const connPromise = db_config.connect();
 
-router.get('/', async (req,res)=>{
-    console.log('test');
+router.get('/', async (req, res) => {
 
-    const conn = await connPromise;
+    console.log('index Router');
+    res.send(path.join(__dirname, 'react-project/build/index.html'))
 
-    let sql = 'select * from tb_member'
-
-    conn.execute(sql,(err,{rows})=>{
-        if(err){throw err;}
-        console.log(rows);
-        res.render(path.join(__dirname,'react-project/build/index.html'),{rows:rows})
-    })
-
-    
 })
+
+
 
 module.exports = router
