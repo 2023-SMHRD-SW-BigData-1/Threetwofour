@@ -4,7 +4,7 @@ const db_info = require('./dbconfig')
 module.exports = {
     init: function () {
         console.log('데이터베이스 초기화 완료');
-        oracledb.initOracleClient({ libDir: 'C:/Users/smhrd/Desktop/oracle_client' })
+        oracledb.initOracleClient({ libDir: __dirname+'./oracle_client' })
     },
     connect: function () {
         return new Promise((resolve, reject) => {
