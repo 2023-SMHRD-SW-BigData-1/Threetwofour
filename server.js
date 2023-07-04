@@ -7,6 +7,8 @@ const userRouter = require('./routes/user')
 const path = require('path')
 const cors = require('cors')
 const webSocket = require('./socket')
+const matchRouter = require('./routes/match')
+const bowlingAlleyRouter = require('./routes/bowlinAlley')
 
 
 app.set('port', process.env.PORT || 8888)
@@ -19,8 +21,12 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'react-project/build')))
 
-app.use('/', indexRouter)
-app.use('/user', userRouter)
+const urlText = '';
+
+app.use((urlText+'/'), indexRouter)
+app.use((urlText+'/user'), userRouter)
+app.use((urlText+'/match'),matchRouter)
+app.use((urlText+'/bowlingAlley'),bowlingAlleyRouter)
 
 const server = app.listen(app.get('port'), () => {
     console.log(app.get('port'), '번 포트에서 서버연결 대기중...');
