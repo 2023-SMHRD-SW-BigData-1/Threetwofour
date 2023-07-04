@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.get('/', async (req, res) => {
 
-    console.log('index Router');
+    console.log('index Router!');
     res.send(path.join(__dirname, 'react-project/build/index.html'))
 
 })
