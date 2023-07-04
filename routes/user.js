@@ -6,7 +6,7 @@ const router = express.Router()
 
 const connPromise = db_config.connect();
 
-router.get('/join', async (req, res) => {
+router.post('/join', async (req, res) => {
     const conn = await connPromise;
 
     let sql = 'select * from tb_member'
@@ -25,6 +25,29 @@ router.get('/join', async (req, res) => {
 
 })
 
+
+router.post('/login', async (req, res) => {
+    const conn = await connPromise;
+
+    let mem_id = 'ab';
+
+    console.log(mem_id);
+
+    let sql = 'select * from tb_member where mem_id = :mem_id'
+
+    conn.execute(sql, [mem_id], (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        conn.release((err) => {
+            if (err) throw err;
+            console.log('연결해제');
+        })
+        res.send(result.rows)
+    })
+
+
+
+})
 
 
 

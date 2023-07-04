@@ -14,6 +14,7 @@ db_config.init()
 oracledb.autoCommit = true;
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
 
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'react-project/build')))
