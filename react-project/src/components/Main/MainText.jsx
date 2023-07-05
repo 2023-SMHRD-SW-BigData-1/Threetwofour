@@ -13,11 +13,11 @@ const MainText = () => {
         {num:3,contents:'매칭중',team:'이준혁팀VS마동석팀',date:'매칭중💥💥💥💥',location:'',matchNow:''}
     ]
     return (
-        <div>
+        <>
             <MainText0 mainText={mainText0}/>
             <MainText1 />
             <MainText2 />
-        </div>
+        </>
     )
 }
 

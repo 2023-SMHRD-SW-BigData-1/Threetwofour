@@ -32,6 +32,14 @@ h1 {
   font-weight: bold;
 }
 
+.wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  background-color: #f1f2f3;
+  padding-top: 2%;
+}
+
 /* --- */
 
 .result {
@@ -39,7 +47,6 @@ h1 {
 }
 
 .intro_bg {
-  width: 100%;
   height: 714px;
   background-image: url('./img/Spin.jpg');
   background-size: contain;
@@ -49,10 +56,10 @@ h1 {
 }
 
 .header {
-  width: 1240px;
+  width: auto;
   margin: auto;
-  display: flex;
-  height: 86px;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .searchArea {
@@ -60,7 +67,7 @@ h1 {
   height: 40px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 5px;
-  margin-top: 24px;
+  display: flex;
 }
 
 .searchArea>form>input {
@@ -72,18 +79,17 @@ h1 {
   padding-left: 10px;
 }
 
-.searchArea>form>span {
-  width: 50px;
-  color: #000000;
+.searchArea>form {
+  display: flex;
 }
 
-.searchArea>form>input::placeholder{
+.searchArea>form>input::placeholder {
   color: #E1E1E1;
   font-size: 145%;
   font-weight: bold;
 }
 
-.searchArea>form>button{
+.searchArea>form>button {
   background-color: dimgrey;
   block-size: 3em;
   margin: 0;
@@ -93,10 +99,43 @@ h1 {
   border: 0;
   color: floralwhite;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.menuBox {
+  display: flex;
+  margin-top: 30px;
+}
+
+.navBox {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navList {
+  width: 90%;
+  display: flex;
+}
+
+.navList>li {
+  width: 100%;
+  border: 1px solid black;
+  text-align: center;
+  padding: 0.56em;
+}
+
+/* .nav1 {
+  border: 1px solid #f00;
+  width: 100%;
+}
 .nav {
   display: flex;
+  border: 1px solid #000;
+}
+nav{
   justify-content: flex-end;
   width: calc(1280px - 300px);
   line-height: 86px;
@@ -108,14 +147,13 @@ h1 {
 .nav>li {
   margin-left: 84px;
   color: #080000;
+  border: 1px solid #00f;
 
-}
+} */
 
 
 
 .amount {
-  position: relative;
-  top: -66px;
   display: flex;
   width: 1280px;
   background: #fff;
@@ -152,14 +190,10 @@ h1 {
 /* main_text0 */
 
 .main_text0 {
-  width: 100%;
-  height: 601px;
-  margin-top: -132px;
   background: #f1f2f3;
 }
 
 .main_text0>h1 {
-  padding-top: 116px;
   text-align: center;
 }
 
@@ -170,8 +204,6 @@ h1 {
 .icons {
   display: flex;
   width: 1280px;
-  height: 302px;
-  /* background: orange; */
   margin: auto;
 }
 
@@ -216,9 +248,6 @@ h1 {
 
 .main_text1 {
   width: 100%;
-  height: 659px;
-  /* margin-top:-132px; */
-  /* background: #2F7AF4 */
 }
 
 .main_text1>h1 {
@@ -234,7 +263,6 @@ h1 {
   width: 1280px;
   display: flex;
   margin: 49px auto;
-  height: 427px;
 }
 
 .service>.contents2 {
@@ -248,8 +276,10 @@ h1 {
 /* main_text2 */
 .main_text2 {
   width: 100%;
-  height: 418px;
   background-image: url("./img/Ball.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .main_text2>ul {
@@ -258,7 +288,7 @@ h1 {
 }
 
 .main_text2>ul>li {
-  flex: 1;
+  flex: 1 1;
   text-align: center;
 }
 

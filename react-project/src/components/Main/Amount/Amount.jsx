@@ -2,7 +2,6 @@ import React from 'react'
 
 const Amount = ({ contentsResult }) => {
     return (
-        <div>
             <ul className="amount">
 
                 {contentsResult.map(item => 
@@ -15,7 +14,6 @@ const Amount = ({ contentsResult }) => {
                 )}
 
             </ul>
-        </div>
     )
 }
 

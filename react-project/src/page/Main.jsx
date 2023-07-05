@@ -14,12 +14,12 @@ const Main = () => {
   ]
 
   return (
-    <div>
+    <>
       <Wrap />
       <Amount contentsResult={contentsResult} />
       <MainText />
       <Footer />
-    </div>
+    </>
   )
 }
 

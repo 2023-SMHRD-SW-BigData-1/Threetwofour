@@ -7,14 +7,23 @@ import Main from './page/Main';
 
 function App(data) {
   return (
-    <div>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      flexWrap: 'nowrap',
+      alignItems: 'center'
+    }}>
       <Header />
-      
+      <div style={{
+        width: 'auto'
+      }}>
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path='/user/join' element={<Join element={data} />} />
           <Route path='/user/login' element={<Login />} />
-        </Routes>
+      </Routes>
+
+      </div>
     </div>
   );
 }
