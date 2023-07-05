@@ -27,9 +27,9 @@ const Header = () => {
             </div>
             <ul className="nav">
                 <li><Link to={'/'}>HOME</Link></li>
-                <li><Link to={'/'}>JOIN CLUB</Link></li>
-                <li><Link to={'/'}>SERVICE</Link></li>
-                <li><Link to={'/'}>COMMUNITY</Link></li>
+                <li><Link to={'/club/'}>JOIN CLUB</Link></li>
+                <li><Link to={'/service/'}>SERVICE</Link></li>
+                <li><Link to={'/community/'}>COMMUNITY</Link></li>
                 <li><Link to={'/user/login'}>LOGIN</Link></li>
             </ul>
         </div>
