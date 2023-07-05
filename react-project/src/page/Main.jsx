@@ -1,27 +1,22 @@
 import React from 'react'
-import Amount from '../components/Amount/Amount'
-import Footer from '../components/Footer'
-import MainText from '../components/MainText'
-import Wrap from '../components/Wrap'
+import Amount from '../components/Main/Amount/Amount'
+import Footer from '../components/Main/Footer'
+import MainText from '../components/Main/MainText'
+import Wrap from '../components/Main/Wrap'
 
 const Main = () => {
-  let contents1 = ['지금까지 매칭게임수', '진행중인 매치', '이번주 볼링왕🥰', '주간볼링장순위⚡']
-  let result = ['32,078게임', '1,024게임', '324팀소속 오승원님', '1.지산볼링장 △']
 
   let contentsResult = [
-    ['지금까지 매칭게임수','32,078게임'],
-    ['진행중인 매치','1,024게임'],
-    ['이번주 볼링왕🥰','324팀소속 오승원님'],
-    ['주간볼링장순위⚡','1.지산볼링장 △']
+    { contents1: '지금까지 매칭게임수', result: '32,078게임' },
+    { contents1: '진행중인 매치', result: '1,024게임' },
+    { contents1: '이번주 볼링왕🥰', result: '324팀소속 오승원님' },
+    { contents1: '주간볼링장순위⚡', result: '1.지산볼링장 △' }
   ]
 
-  console.log(contentsResult);
-
-  console.log(contentsResult);
   return (
     <div>
       <Wrap />
-      <Amount contentsResult={contentsResult} result={result} />
+      <Amount contentsResult={contentsResult} />
       <MainText />
       <Footer />
     </div>

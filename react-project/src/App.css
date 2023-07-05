@@ -77,6 +77,24 @@ h1 {
   color: #000000;
 }
 
+.searchArea>form>input::placeholder{
+  color: #E1E1E1;
+  font-size: 145%;
+  font-weight: bold;
+}
+
+.searchArea>form>button{
+  background-color: dimgrey;
+  block-size: 3em;
+  margin: 0;
+  padding: 0;
+  width: 4.5em;
+  border-radius: 0 0.3em 0.3em 0;
+  border: 0;
+  color: floralwhite;
+  cursor: pointer;
+}
+
 .nav {
   display: flex;
   justify-content: flex-end;
@@ -189,6 +207,8 @@ h1 {
   margin: 25px auto;
   position: relative;
   top: -20px;
+  border: 0;
+  cursor: pointer;
 
 }
 

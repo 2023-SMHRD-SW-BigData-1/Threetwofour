@@ -1,5 +1,5 @@
 import React from 'react'
-import bowlingShadow from '../../img/BowlingShadow.png'
+import bowlingShadow from '../../../img/BowlingShadow.png'
 
 const MainText1 = () => {
     return (
