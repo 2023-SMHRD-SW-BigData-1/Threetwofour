@@ -14,9 +14,7 @@ function App(data) {
       alignItems: 'center'
     }}>
       <Header />
-      <div style={{
-        width: 'auto'
-      }}>
+      <div style={{width: 'auto'}}>
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path='/user/join' element={<Join element={data} />} />

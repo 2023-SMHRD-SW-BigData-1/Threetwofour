@@ -284,7 +284,7 @@ nav{
 
 .main_text2>ul {
   display: flex;
-  padding-top: 138px;
+  padding: 10% 0 10% 0;
 }
 
 .main_text2>ul>li {
@@ -310,7 +310,8 @@ nav{
 .footer {
   display: flex;
   background: #1f1f1f;
-  padding-bottom: 30px;
+  padding: 30px 0 30px 0;
+  align-items: center;
 }
 
 .footer>div:first-child {
