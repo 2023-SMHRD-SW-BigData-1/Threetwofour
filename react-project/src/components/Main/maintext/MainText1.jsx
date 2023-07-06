@@ -11,7 +11,7 @@ const MainText1 = () => {
                     <img src={bowlingShadow} style={{height: "23rem", marginTop: "-100px", paddingTop: 0, overflow: "hidden"}} />
                 </div>
                 <div className="contents2">
-
+                    
                 </div>
             </div>
         </div>
