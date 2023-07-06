@@ -38,7 +38,7 @@ const Login = () => {
     }
   };
   const onClickConfirmButton = () => {
-    
+
   }
 
   return (
@@ -82,12 +82,10 @@ const Login = () => {
           <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>
         )}
       </div>
-    </div>
-
-    <div>
       <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomButton">
         확인
       </button>
+
     </div>
   </div>
   )

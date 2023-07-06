@@ -1,6 +1,6 @@
 import React from 'react'
 import Amount from '../components/Main/Amount/Amount'
-import Footer from '../components/Main/Footer'
+// import Footer from '../components/Footer'
 import MainText from '../components/Main/MainText'
 import Wrap from '../components/Main/Wrap'
 
@@ -18,7 +18,7 @@ const Main = () => {
       <Wrap />
       <Amount contentsResult={contentsResult} />
       <MainText />
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

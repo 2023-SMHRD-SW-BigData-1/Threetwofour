@@ -334,12 +334,15 @@ nav{
 
 /* Main Page CSS End */
 
+/* ------------------------------------------------------------------------------------------ */
+
 /* Join Login CSS */
 .page {
   background-color: #F7F7F7;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  height: 100%;
 }
 
 .titleWrap {
@@ -394,8 +397,8 @@ nav{
   border-radius: 64px;
   background-color: #9e30f4;
   color: white;
-  margin-bottom: 16px;
   cursor: pointer;
+  margin: 7% auto 0 auto;
 }
 
 .bottomButton:disabled {
