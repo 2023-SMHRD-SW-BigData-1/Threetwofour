@@ -29,7 +29,7 @@ const AdressApp = React.forwardRef(({ data, setData, onChange }, ref) => {
 
             </div>
             <div className='inputWrap'>
-                <input type="text" className='input' ref={ref} readOnly />
+                <input type="text" className='input' ref={ref} placeholder='우편번호 검색을 이용해주세요.' readOnly />
             </div>
             <div className='inputWrap'>
                 <input type="text" className='input' placeholder='상세주소' />
