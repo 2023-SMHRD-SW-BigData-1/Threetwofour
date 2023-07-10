@@ -5,23 +5,25 @@ import Join from './page/Join';
 import Login from './page/Login';
 import Main from './page/Main';
 import Footer from './components/Footer';
+import Logout from './page/Logout';
 
 function App(data) {
   return (
     <div>
       <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
       }}>
         <Header />
 
       </div>
-      <div style={{height: '83.68230%'}}>
+      <div style={{ height: '87%' }}>
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path='/user/join' element={<Join element={data} />} />
           <Route path='/user/login' element={<Login />} />
+          <Route path='/user/logout' element={<Logout />} />
         </Routes>
       </div>
       <div>

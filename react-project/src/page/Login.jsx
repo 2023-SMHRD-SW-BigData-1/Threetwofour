@@ -62,23 +62,23 @@ const Login = () => {
       axios.post('http://localhost:8888/DB/user/login', { userData: userData })
         .then((res) => {
 
-          console.log(res.data);
-
           // 로그인 성공
-          if (res.data) {
+          if (res.data.result) {
 
             Swal.fire({
-              icon:'success',
-              title:'로그인',
-              text:'로그인이 완료되었습니다.',
+              icon: 'success',
+              title: '로그인',
+              text: '로그인이 완료되었습니다.',
               showCancelButton: false,
               confirmButtonAriaLabel: '확인'
-            }).then((res)=>{
-      
+            }).then((result) => {
+
               // 로그인 성공
-  
+              sessionStorage.setItem('user', res.data.data.user)
+              sessionStorage.setItem('score', res.data.data.score)
+
               nav('/')
-      
+
             })
 
           } else { // 로그인 실패

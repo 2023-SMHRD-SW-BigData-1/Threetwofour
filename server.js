@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'react-project/build')))
 
 const urlText = '/DB';
 
-app.use(('/'), indexRouter)
+app.use('/', indexRouter)
 app.use((urlText+'/user'), userRouter)
 app.use((urlText+'/match'),matchRouter)
 app.use((urlText+'/bowlingAlley'),bowlingAlleyRouter)

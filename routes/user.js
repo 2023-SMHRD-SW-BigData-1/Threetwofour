@@ -37,21 +37,49 @@ router.post('/login', async (req, res) => {
     // let mem_pw = '1234'
     let { mem_pw, mem_id } = req.body.userData
     let dataList = [mem_id, mem_pw]
+    let sendData = { user: {}, score: {} }
+    let acc = false
 
     console.log('login 시도');
 
     // sql문 로직 작성
     let sql = 'select * from tb_member where mem_id = :mem_id and mem_pw = :mem_pw'
 
-
     // DB 연결 시도
     oracle(sql, dataList)
         .then((result) => {
-            res.send(result)
+            sendData.user = result[0]
+        })
+        .catch((error) => {
+            res.status(500).send(error.message)
+        });
+
+
+    dataList = [mem_id, mem_id]
+
+    sql = `SELECT g.game_seq,g.game_no,m.match_at,
+                SUM(g.p01_score + g.p02_score + g.p03_score + g.p04_score + g.p05_score + g.p06_score + g.p07_score + g.p08_score + g.p09_score + g.p10_score + g.p11_score + g.p12_score) AS pScoreSum, 
+                SUM(g.a01_score + g.a02_score + g.a03_score + g.a04_score + g.a05_score + g.a06_score + g.a07_score + g.a08_score + g.a09_score + g.a10_score + g.a11_score + g.a12_score) AS aScoreSum
+            FROM tb_game g,
+                (SELECT *
+                FROM tb_match mt,
+                    (SELECT PROPOSER_SEQ FROM tb_matcher WHERE mem_id = :mem_id) me,
+                    (SELECT ACCEPTOR_SEQ FROM tb_acceptor WHERE mem_id = :mem_id) acc
+                WHERE mt.PROPOSER_SEQ = me.PROPOSER_SEQ AND mt.ACCEPTOR_SEQ = acc.ACCEPTOR_SEQ) m
+            WHERE g.match_seq = m.match_seq
+            GROUP BY (g.game_seq,g.game_no),(m.match_at)
+            order by g.game_seq`
+
+    oracle(sql, dataList)
+        .then((result) => {
+            acc = true
+            sendData.score = result;
+            res.json({ result: acc, data: sendData })
         })
         .catch((error) => {
             res.status(500).send(error.message)
         })
+
 
 })
 // 로그인 끝
@@ -137,7 +165,7 @@ const oracle = (sql, dataList) => {
                         connRelase(conn)
 
                         // 보낼 값
-                        resolve(true)
+                        resolve(result.rows)
                     } else {
 
                         // 로그인 실패

@@ -23,15 +23,24 @@ const Header = () => {
                         <button type='submit' onClick={searchBtn}>검색</button>
                     </form>
                 </div>
-                
+
                 <div className='navBox'>
                     <ul className="navList">
                         <li><Link to={'/'}>HOME</Link></li>
                         <li><Link to={'/club/'}>JOIN CLUB</Link></li>
                         <li><Link to={'/service/'}>SERVICE</Link></li>
                         <li><Link to={'/community/'}>COMMUNITY</Link></li>
-                        <li><Link to={'/user/join'}>JOIN</Link></li>
-                        <li><Link to={'/user/login'}>LOGIN</Link></li>
+                        {!sessionStorage.getItem('user') ?
+                            <>
+                                <li><Link to={'/user/join'}>JOIN</Link></li>
+                                <li><Link to={'/user/login'}>LOGIN</Link></li>
+
+                            </>
+                            :
+                            <>
+                                <li><Link to={'/user/mypage'}>MY PAGE</Link></li>
+                                <li><Link to={'/user/logout'}>LOGOUT</Link></li>
+                            </>}
                     </ul>
                 </div>
 
