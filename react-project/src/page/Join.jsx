@@ -3,6 +3,7 @@ import Input from '../components/Join/Input';
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import AdressApp from '../components/Join/AdressApp';
 
 const Join = () => {
 
@@ -19,7 +20,7 @@ const Join = () => {
   const [pwValid, setPwValid] = useState(false);
   const [pwsummitValid, setPwsummitValid] = useState(false);
   const [nickValid, setNickValid] = useState(false);
-  const [addValid, setAddValid] =useState(false)
+  const [addValid, setAddValid] = useState(false)
   const [notAllow, setNotAllow] = useState(true);
   const [inputTitlesummit, setinputTitlesummit] = useState(true);
 
@@ -33,12 +34,13 @@ const Join = () => {
 
   useEffect(() => {
 
-    if (emailValid && pwValid && pwsummitValid && nickValid) {
+
+    if (emailValid && pwValid && pwsummitValid && nickValid && addValid) {
       setNotAllow(false);
       return;
     }
     setNotAllow(true);
-  }, [emailValid, pwValid, pwsummitValid, nickValid]);
+  }, [emailValid, pwValid, pwsummitValid, nickValid, addValid]);
 
   const handleData = () => {
 
@@ -95,45 +97,53 @@ const Join = () => {
     } else {
       setNickValid(false)
     }
+
+    regex =
+      /^.{1,}$/;
+    if (regex.test(userData.mem_region)) {
+      setAddValid(true)
+    } else {
+      setAddValid(false)
+    }
   }, [userData])
 
 
   const onClickConfirmButton = () => {
     if (!notAllow) {
-      axios.post('http://localhost:8888/DB/user/join',{userData:userData})
-      .then((res)=>{
-        
-        if(res.data){
-          Swal.fire({
-            icon:'success',
-            title:'정보 확인',
-            text:'회원가입이 완료되었습니다.',
-            showCancelButton: false,
-            confirmButtonAriaLabel: '확인'
-          }).then((res)=>{
-    
-            // 회원가입 성공
+      axios.post('http://localhost:8888/DB/user/join', { userData: userData })
+        .then((res) => {
 
-            nav('/')
-    
-          })
-        }else{
-          Swal.fire({
-            icon:'error',
-            title:'정보 확인',
-            text:'회원가입에 실패하셨습니다.',
-            showCancelButton: false,
-            confirmButtonAriaLabel: '확인'
-          }).then((res)=>{
-            
-            // 회원가입 실패
+          if (res.data) {
+            Swal.fire({
+              icon: 'success',
+              title: '정보 확인',
+              text: '회원가입이 완료되었습니다.',
+              showCancelButton: false,
+              confirmButtonAriaLabel: '확인'
+            }).then((res) => {
 
-    
-          })
-        }
+              // 회원가입 성공
 
-      })
-      .catch(()=>{console.error('Failed to join');})
+              nav('/')
+
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: '정보 확인',
+              text: '회원가입에 실패하셨습니다.',
+              showCancelButton: false,
+              confirmButtonAriaLabel: '확인'
+            }).then((res) => {
+
+              // 회원가입 실패
+
+
+            })
+          }
+
+        })
+        .catch(() => { console.error('Failed to join'); })
 
 
     }
@@ -199,15 +209,11 @@ const Join = () => {
           data={userData.mem_nick}
           textStyle={{ marginTop: "26px" }}
         />
-        <Input
-          text={['사는지역', '']}
+
+        <AdressApp
           ref={addRef}
-          type={'text'}
-          placeholder={'2글자 이상 12글자 이하로 입력해주세요'}
-          valid={addValid}
-          handleData={handleData}
-          data={userData.mem_region}
-          textStyle={{ marginTop: "26px" }}
+          data={userData}
+          onChange={handleData}
         />
 
         <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomButton">
