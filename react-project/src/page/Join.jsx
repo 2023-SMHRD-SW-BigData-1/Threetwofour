@@ -17,6 +17,8 @@ const Join = () => {
   })
 
   const [emailValid, setEmailValid] = useState(false);
+  const [emailcheckRedundancyValid, setEmailCheckRedundancyValid] = useState(false)
+  const [clickBtn, setClickBtn] = useState(false)
   const [pwValid, setPwValid] = useState(false);
   const [pwsummitValid, setPwsummitValid] = useState(false);
   const [nickValid, setNickValid] = useState(false);
@@ -43,6 +45,8 @@ const Join = () => {
   }, [emailValid, pwValid, pwsummitValid, nickValid, addValid]);
 
   const handleData = () => {
+
+    setClickBtn(false)
 
     setUserData({
       mem_id: emailRef.current.value,
@@ -150,6 +154,20 @@ const Join = () => {
 
   }
 
+  const checkRedundancy = async () => {
+    if (emailValid) {
+      const res = await axios.get('http://localhost:8888/DB/user/login/'+ userData.mem_id )
+      
+      console.log(res.data);
+      
+      if(!res.data){
+        setEmailCheckRedundancyValid(true)
+      }
+      
+      setClickBtn(true)
+    }
+  }
+
   return (
     <div className="page">
       <div className="titleWrap">
@@ -168,6 +186,13 @@ const Join = () => {
           handleData={handleData}
           data={userData.mem_id}
         />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button className='postCode_btn' style={{ width: '10%', margin: '10px 0 10px 10px' }} disabled={(!emailValid)} onClick={checkRedundancy}>중복확인</button>
+          {clickBtn ? (emailcheckRedundancyValid
+            ? <div style={{ color: 'green', marginLeft: '5px' }}>사용가능한 아이디입니다.</div>
+            : <div style={{ color: '#ef0000', marginLeft: '5px' }}>해당 아이디가 존재합니다.</div>)
+            : <></>}
+        </div>
         <Input
           text={['비밀번호', '영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.']}
           ref={pwRef}
@@ -194,7 +219,7 @@ const Join = () => {
         </div>
         <div className="errorMessageWrap">
           {!pwsummitValid && userData.pwsummit.length > 0
-            ? (!(userData.pwsummit === '') && !(userData.mem_pw === '') && <div>비밀번호가 불일치합니다</div>)
+            ? (!(userData.pwsummit === '') && !(userData.mem_pw === '') && <div style={{ color: '#ef0000' }}>비밀번호가 불일치합니다</div>)
             : (!(userData.pwsummit === '') && !(userData.mem_pw === '') && <div style={{ color: 'green' }} >비밀번호가 일치합니다</div>)
           }
         </div>

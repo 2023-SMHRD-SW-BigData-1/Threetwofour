@@ -29,6 +29,20 @@ router.post('/join', (req, res) => {
 })
 // 회원가입 끝
 
+// 중복확인
+router.get('/login/:mem_id', async (req, res) => {
+    
+    let dataList = [req.params.mem_id]
+
+    let sql = 'select * from tb_member where mem_id = :mem_id'
+
+    oracle(sql, dataList)
+        .then((result) => {
+            res.send(result)
+        })
+})
+// 중복확인 끝
+
 // 로그인
 router.post('/login', async (req, res) => {
 

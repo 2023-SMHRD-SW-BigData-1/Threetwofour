@@ -16,7 +16,7 @@ const Input = React.forwardRef(({ text, type, placeholder, valid, handleData, da
             </div>
             <div className="errorMessageWrap">
                 {!valid && data.length > 0 && (
-                    <div style={{color:'red'}}>{text[1]}</div>
+                    <div style={{color:'#ef0000'}}>{text[1]}</div>
                 )}
             </div>
         </>

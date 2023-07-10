@@ -466,3 +466,8 @@ nav{
     cursor: pointer;
     margin: 5px 0 5px 5px;
 }
+
+.postCode_btn:disabled{
+  background-color: #dadada;
+  color: white;
+}

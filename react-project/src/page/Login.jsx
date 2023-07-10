@@ -59,7 +59,7 @@ const Login = () => {
 
   const onClickConfirmButton = () => {
     if (!notAllow) {
-      axios.post('http://localhost:8888/DB/user/login', { userData: userData })
+      axios.get('http://localhost:8888/DB/user/login', { userData: userData })
         .then((res) => {
 
           // 로그인 성공
