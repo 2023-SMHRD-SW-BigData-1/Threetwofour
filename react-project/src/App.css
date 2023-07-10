@@ -449,3 +449,15 @@ nav{
 .section-1{
   text-align: center;
 }
+
+.postCode_btn{
+  width: 5%;
+    height: 30px;
+    border: none;
+    font-weight: bold;
+    border-radius: 64px;
+    background-color: rgb(158, 48, 244);
+    color: white;
+    cursor: pointer;
+    margin: 5px 0 5px 5px;
+}

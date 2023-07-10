@@ -1,7 +1,7 @@
 import React from 'react'
 import DaumPostcode from 'react-daum-postcode'
 
-const PopupPostCode = React.forwardRef((props,ref) => {
+const PopupPostCode = React.forwardRef((props, ref) => {
     // 우편번호 검색 후 주소 클릭 시 실행될 함수, data callback 용
     const handlePostCode = (data) => {
         let fullAddress = data.address;
@@ -16,7 +16,7 @@ const PopupPostCode = React.forwardRef((props,ref) => {
             }
             fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
         }
-        
+
         ref.zonecodeRef.current.value = data.zonecode
         ref.ref.current.value = fullAddress
         props.onChange()
@@ -27,18 +27,15 @@ const PopupPostCode = React.forwardRef((props,ref) => {
     const postCodeStyle = {
         display: "block",
         position: "absolute",
-        top: "10%",
         width: "600px",
         height: "600px",
-        padding: "7px",
     };
 
     return (
-        <div>
-            <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
-            // 닫기 버튼 생성
-            <button type='button' onClick={() => { props.onClose() }} className='postCode_btn'>닫기</button>
-        </div>
+            <div>
+                <button type='button' onClick={() => { props.onClose() }} className='postCode_btn'>닫기</button>
+                <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
+            </div>
     )
 })
 
