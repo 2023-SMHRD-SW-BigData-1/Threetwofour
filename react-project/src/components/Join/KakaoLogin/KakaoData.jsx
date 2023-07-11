@@ -15,7 +15,6 @@ const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 const KakaoData = () => {
     const code = new URL(window.location.href).searchParams.get("code");
 
-    console.log(code);
     const navigatioin = useNavigate();
 
     const getKAKAO = async () => {
@@ -27,7 +26,7 @@ const KakaoData = () => {
             client_secret: KAKAO_CLIENT_ID,
         });
 
-        const result = await axios({
+        const res = await axios({
             method: "POST",
             url: "https://kauth.kakao.com/oauth/token",
             data: data,
@@ -36,14 +35,14 @@ const KakaoData = () => {
         // kakao Javascript SDK 초기화
         window.Kakao.init(KAKAO_API_KEY);
 
-        window.Kakao.Auth.setAccessToken(result.data.access_token);
+        window.Kakao.Auth.setAccessToken(res.data.access_token);
 
         const kakaoData = await window.Kakao.API.request({
             url: "/v2/user/me",
         });
 
-        console.log(result.data.access_token);
-        console.log(kakaoData);
+        // console.log(res.data.access_token);
+        // console.log(kakaoData);
 
 
 
@@ -59,7 +58,35 @@ const KakaoData = () => {
          * 
          */
 
-        navigatioin("/");
+        let userData = {
+            mem_id: kakaoData.kakao_account.email,
+            mem_pw: String(kakaoData.id),
+            mem_nick: kakaoData.properties.nickname,
+            mem_region: " "
+        }
+
+        let result = (await axios.post('http://localhost:8888/DB/user/login', { userData: userData })).data
+
+        if (result.result) {
+            sessionStorage.setItem('user', result.data.user)
+            sessionStorage.setItem('score', result.data.score)
+            navigatioin("/");
+        } else {
+
+            result = (await axios.post('http://localhost:8888/DB/user/join', { userData: userData })).data
+
+            if (result) {
+
+                result = (await axios.post('http://localhost:8888/DB/user/login', { userData: userData })).data
+
+                sessionStorage.setItem('user', result.data.user)
+                sessionStorage.setItem('score', result.data.score)
+
+                navigatioin("/");
+            }
+
+        }
+
     };
 
     React.useEffect(() => {

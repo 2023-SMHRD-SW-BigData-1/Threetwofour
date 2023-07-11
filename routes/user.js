@@ -11,7 +11,7 @@ router.post('/join', (req, res) => {
     // sql문에 들어갈 패러미터
     let mem_clubno = 0
     let { mem_pw, mem_id, mem_nick, mem_region } = req.body.userData
-    let dataList = [mem_pw, mem_id, mem_nick, mem_region]
+    let dataList = [mem_id, mem_pw, mem_nick, mem_region, 0]
 
     // sql문 로직 작성
     let sql = 'insert into tb_member(mem_id,mem_pw,mem_nick,mem_region,mem_clubno) values (:mem_id,:mem_pw,:mem_nick,:mem_region,:mem_clubno)'
@@ -31,7 +31,7 @@ router.post('/join', (req, res) => {
 
 // 중복확인
 router.get('/login/:mem_id', async (req, res) => {
-    
+
     let dataList = [req.params.mem_id]
 
     let sql = 'select * from tb_member where mem_id = :mem_id'
@@ -62,7 +62,10 @@ router.post('/login', async (req, res) => {
     // DB 연결 시도
     oracle(sql, dataList)
         .then((result) => {
-            sendData.user = result[0]
+            sendData.user = result
+            if(result.length > 0){
+                acc = true
+            }
         })
         .catch((error) => {
             res.status(500).send(error.message)
@@ -86,7 +89,6 @@ router.post('/login', async (req, res) => {
 
     oracle(sql, dataList)
         .then((result) => {
-            acc = true
             sendData.score = result;
             res.json({ result: acc, data: sendData })
         })
@@ -177,14 +179,10 @@ const oracle = (sql, dataList) => {
 
                         // 로그인 성공시에만 연결이 해제됨
                         connRelase(conn)
-
-                        // 보낼 값
-                        resolve(result.rows)
-                    } else {
-
-                        // 로그인 실패
-                        resolve(false)
                     }
+
+                    // 보낼 값
+                    resolve(result.rows)
                 }
 
                 if (Object.keys(result).includes('rowsAffected')) {

@@ -114,10 +114,6 @@ const Login = () => {
     }
   }
 
-  const [kakao, setKakao] = useState('')
-
-  console.log(kakao);
-
   return (
     <div className="page">
       <div className="titleWrap">
@@ -148,7 +144,7 @@ const Login = () => {
           textStyle={{ marginTop: "26px" }}
         />
 
-        <KakaoLogin setKakao={setKakao} />
+        <KakaoLogin />
 
         <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomButton">
           확인
