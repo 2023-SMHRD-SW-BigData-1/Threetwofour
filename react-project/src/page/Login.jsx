@@ -1,10 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Input from '../components/Join/Input';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
+import KakaoLogin from '../components/Join/KakaoLogin/KakaoLogin';
 
 const Login = () => {
+
+  // REST API 키
+  const KAKAO_API_KEY = "85cec221b4aae92985aaeca299aef5cc";
+
+  // JavaScript 키
+  const KAKAO_CLIENT_ID = "74aacd4ce5f7641cfe680a20e6aa8c53";
+
+  // REDIRECT_URI
+  const REDIRECT_URI = "http://localhost:3000/oauth/callback/kakao";
+
+  const KakaoSocialLoginLink = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+
 
   const [userData, setUserData] = useState({
     mem_id: '',
@@ -100,6 +114,10 @@ const Login = () => {
     }
   }
 
+  const [kakao, setKakao] = useState('')
+
+  console.log(kakao);
+
   return (
     <div className="page">
       <div className="titleWrap">
@@ -129,6 +147,8 @@ const Login = () => {
           data={userData.mem_pw}
           textStyle={{ marginTop: "26px" }}
         />
+
+        <KakaoLogin setKakao={setKakao} />
 
         <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomButton">
           확인
