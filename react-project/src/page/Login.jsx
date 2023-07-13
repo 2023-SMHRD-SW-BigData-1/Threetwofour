@@ -73,7 +73,7 @@ const Login = () => {
 
   const onClickConfirmButton = () => {
     if (!notAllow) {
-      axios.get('http://localhost:8888/DB/user/login', { userData: userData })
+      axios.post('http://localhost:8888/DB/user/login', { userData: userData })
         .then((res) => {
 
           // 로그인 성공
@@ -86,6 +86,8 @@ const Login = () => {
               showCancelButton: false,
               confirmButtonAriaLabel: '확인'
             }).then((result) => {
+
+            
 
               // 로그인 성공
               sessionStorage.setItem('user', res.data.data.user)

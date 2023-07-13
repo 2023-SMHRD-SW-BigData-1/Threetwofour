@@ -7,7 +7,7 @@ const CardWrap = ({ imgSrc }) => {
         <Card>
             <Card.Img variant="top" src={imgSrc} />
             <Card.Body>
-                <Card.Text>테스트</Card.Text>
+                <Card.Text>Wrap/CardWrap.jsx 에 있는 텍스트</Card.Text>
             </Card.Body>
         </Card>
     )

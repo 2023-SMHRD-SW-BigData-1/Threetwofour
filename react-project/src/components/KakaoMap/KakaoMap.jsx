@@ -3,13 +3,16 @@ import Map from './Map'
 
 const KakaoMap = () => {
   const [text, setText] = useState('')
-  const [result, setResult] = useState('볼링장 카카오')
+  const [result, setResult] = useState('광주 볼링장')
   const [count, setCount] = useState(0)
 
   const onChange = (e) => {
     setText(e.target.value);
   }
   const submit = (e) => {
+
+    e.preventDefault()
+
     setText(text)
     setResult(text)
     setText('')
@@ -25,8 +28,9 @@ const KakaoMap = () => {
           flexDirection: 'column',
           alignItems: 'center',
     }}>
+
         <input style={{
-          margin: '10px',
+          margin: '0 0 10px 0',
           height: '40px',
           borderStyle: 'solid',
           borderColor: '#3399FF',

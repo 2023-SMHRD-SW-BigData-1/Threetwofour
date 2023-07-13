@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const db_config = require('../config/dbconfig')
+const oracledb = require('oracledb')
 
 
 router.get('/', async (req, res) => {
@@ -9,10 +10,12 @@ router.get('/', async (req, res) => {
 
     let sql = 'select * from tb_bowling_alley'
 
+    console.log('볼링장 데이터 가져오기');
     // DB 연결시도
-    oracle(sql, dataList)
+    await oracle(sql, dataList)
         .then((result) => {
-            console.log('club정보');
+
+            res.send(result);
         })
         .catch((error) => {
             res.status(500).send(error.message)
@@ -43,18 +46,13 @@ const oracle = (sql, dataList) => {
                     console.log('rows가 있음');
 
                     // 성공 후 로직
-                    if (result.rows.length > 0) {
 
-                        // 로그인 성공시에만 연결이 해제됨
-                        connRelase(conn)
+                    // 로그인 성공시에만 연결이 해제됨
+                    connRelase(conn)
 
-                        // 보낼 값
-                        resolve(true)
-                    } else {
+                    // 보낼 값
 
-                        // 로그인 실패
-                        resolve(false)
-                    }
+                    resolve(result.rows)
                 }
 
                 if (Object.keys(result).includes('rowsAffected')) {
@@ -91,6 +89,7 @@ const connRelase = (conn) => {
         console.log('DB 연결 해제');
     })
 }
+
 
 
 

@@ -8,6 +8,9 @@
   padding: 0px;
   color: #000;
 }
+a {
+  text-decoration: none !important;
+}
 
 #root {
   display: flex;
@@ -222,7 +225,6 @@ nav{
   flex: 1;
   background: white;
   margin-top: 49px;
-  height: 302px;
   text-align: center;
 }
 
@@ -261,7 +263,7 @@ nav{
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .main_text1>h1 {
@@ -274,16 +276,14 @@ nav{
 }
 
 .service {
-  width: 1280px;
   display: flex;
-  margin: 49px auto;
   flex-direction: column;
   align-items: center;
 }
 
 .service>.contents2 {
-  padding: 20px;
   width: -webkit-fill-available;
+  margin: 10px 0;
 }
 
 .service>.contents2>h2 {
@@ -327,6 +327,9 @@ nav{
 .food_photo {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  width: -webkit-fill-available;
+  margin: 10px 0;
 }
 
 .footer {
@@ -434,7 +437,7 @@ nav{
   color: #3399FF;
 }
 
-.btn {
+.section-1 button.btn {
   margin: 10px;
   width: 260px;
   height: 45px;

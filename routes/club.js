@@ -4,19 +4,117 @@ const db_config = require('../config/dbconfig')
 const oracledb = require('oracledb')
 
 
-router.get('/',(req,res)=>{
+router.get('/', async (req, res) => {
 
     let dataList = []
 
-    let sql = 'select * from tb_club'
+    let memberData = {
+        memId: 'element.MEM_ID',
+        memNick: 'element.MEM_NICK',
+        memRegion: 'element.MEM_REGION',
+        memJoindate: 'element.MEM_JOINDATE'
+    }
 
-    oracle(sql, dataList)
+    let bowlingAlleyData = {
+        bowlingAlleySeq: 'element.BA_SEQ',
+        bowlingAlleyName: 'element.BA_NAME',
+        bowlingAlleyTel: 'element.BA_TEL',
+        bowlingAlleyAddr: 'element.BA_ADDR',
+        bowlingAlleyMachine: 'element.BA_MACHINE',
+        bowlingAlleyMonitor: 'element.BA_MONITOR',
+        bowlingAlleyLane: 'element.BA_LANE',
+        bowlingAlleySet: 'element.BA_SET'
+    }
+
+    let clubData = {
+        clubSeq: 'element.CLUB_SEQ',
+        clubName: 'element.CLUB_NAME',
+        clubInfo: 'element.CLUB_INFO',
+        clubPhoto: 'element.CLUB_PHOTO',
+        clubFoundationAt: 'element.CLUB_FOUNDATION_ATT',
+        bowlingAlley: 'bowlingAlleyData',
+        memberInfo: ['memberData']
+    }
+
+    let sendData = []
+
+    let sql = `select * from tb_club`
+
+    await oracle(sql, dataList)
         .then((result) => {
-            console.log('club정보');
+            result.forEach(element => {
+                clubData = {
+                    clubSeq: element.CLUB_SEQ,
+                    clubName: element.CLUB_NAME,
+                    clubInfo: element.CLUB_INFO,
+                    clubPhoto: element.CLUB_PHOTO,
+                    clubFoundationAt: element.CLUB_FOUNDATION_AT,
+                    bowlingAlley: 'bowlingAlleyData',
+                    memberInfo: []
+                }
+                sendData.push(clubData)
+            });
+            console.log(sendData);
+
         })
         .catch((error) => {
             res.status(500).send(error.message)
         })
+
+    sql = `select club.club_seq, club.club_name, club.club_info, club.club_photo, club.club_foundation_at,
+                  club.join_seq, club.joined_at,
+                  club.mem_id, club.mem_pw, club.mem_nick, club.mem_region, club.mem_joindate, club.mem_clubno, club.mem_type,
+                  bowling.ba_seq, bowling.ba_name, bowling.ba_tel, bowling.ba_addr, bowling.ba_machine, bowling.ba_monitor, bowling.ba_lane, bowling.ba_lanetype, bowling.ba_set
+            from tb_bowling_alley bowling
+            inner join (select club.*, joining.join_seq, joining.joined_at, joining.mem_id, joining.mem_pw, joining.mem_nick, joining.mem_region, joining.mem_joindate, joining.mem_clubno, joining.mem_type
+                        from tb_club club
+                        inner join (select joining.join_seq, joining.club_seq, joining.joined_at, mem.*
+                                    from tb_joining joining
+                                    inner join tb_member mem
+                                    on joining.mem_id = mem.mem_id) joining
+                        on club.club_seq = joining.club_seq
+                        order by club.club_seq) club
+            on bowling.ba_seq = club.bowling_alley_seq`;
+
+    await oracle(sql, dataList)
+        .then((result) => {
+
+            sendData.forEach(clubInfo => {
+                result.forEach(element => {
+
+                    memberData = {
+                        memId: element.MEM_ID,
+                        memNick: element.MEM_NICK,
+                        memRegion: element.MEM_REGION,
+                        memJoindate: element.MEM_JOINDATE
+                    }
+
+                    bowlingAlleyData = {
+                        bowlingAlleySeq: element.BA_SEQ,
+                        bowlingAlleyName: element.BA_NAME,
+                        bowlingAlleyTel: element.BA_TEL,
+                        bowlingAlleyAddr: element.BA_ADDR,
+                        bowlingAlleyMachine: element.BA_MACHINE,
+                        bowlingAlleyMonitor: element.BA_MONITOR,
+                        bowlingAlleyLane: element.BA_LANE,
+                        bowlingAlleySet: element.BA_SET
+                    }
+
+
+                    if (clubInfo.clubSeq == element.CLUB_SEQ) {
+
+                        clubInfo.bowlingAlley = bowlingAlleyData
+                        clubInfo.memberInfo.push(memberData)
+                    }
+                })
+            })
+
+        })
+        .catch(() => {
+
+        })
+
+        res.send(sendData)
 
 })
 
@@ -42,18 +140,10 @@ const oracle = (sql, dataList) => {
                     console.log('rows가 있음');
 
                     // 성공 후 로직
-                    if (result.rows.length > 0) {
+                    connRelase(conn)
 
-                        // 로그인 성공시에만 연결이 해제됨
-                        connRelase(conn)
-
-                        // 보낼 값
-                        resolve(true)
-                    } else {
-
-                        // 로그인 실패
-                        resolve(false)
-                    }
+                    // 보낼 값
+                    resolve(result.rows)
                 }
 
                 if (Object.keys(result).includes('rowsAffected')) {

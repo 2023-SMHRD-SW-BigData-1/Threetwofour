@@ -7,19 +7,31 @@ router.get('/', async (req, res) => {
 
     // sql문에 들어갈 패러미터
     let dataList = []
+    let sendData = { todayGames: {}, games: {} }
 
     // sql문 로직 작성
     let sql = 'select * from tb_match'
 
+
     // DB 연결시도
-    oracle(sql, dataList)
+    await oracle(sql, dataList)
         .then((result) => {
-            console.log('club정보');
+            sendData.games = result
         })
         .catch((error) => {
             res.status(500).send(error.message)
         })
 
+    // 오늘 있을 모든 매칭
+    sql = 'select * from tb_match where trunc(match_at) = trunc(sysdate) and match_at >sysdate'
+    await oracle(sql, dataList)
+        .then((result) => {
+            sendData.todayGames = result
+            res.send(sendData)
+        })
+        .catch((error) => {
+            res.status(500).send(error.message)
+        })
 
 })
 
@@ -45,18 +57,13 @@ const oracle = (sql, dataList) => {
                     console.log('rows가 있음');
 
                     // 성공 후 로직
-                    if (result.rows.length > 0) {
 
-                        // 로그인 성공시에만 연결이 해제됨
-                        connRelase(conn)
+                    // 로그인 성공시에만 연결이 해제됨
+                    connRelase(conn)
 
-                        // 보낼 값
-                        resolve(true)
-                    } else {
+                    // 보낼 값
 
-                        // 로그인 실패
-                        resolve(false)
-                    }
+                    resolve(result.rows)
                 }
 
                 if (Object.keys(result).includes('rowsAffected')) {
