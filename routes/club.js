@@ -54,7 +54,6 @@ router.get('/', async (req, res) => {
                 }
                 sendData.push(clubData)
             });
-            console.log(sendData);
 
         })
         .catch((error) => {
@@ -116,6 +115,27 @@ router.get('/', async (req, res) => {
 
         res.send(sendData)
 
+})
+
+router.get('/more', async(req,res)=>{
+    let dataList = []
+    
+    let sql = `select rownum, a.club_seq "num", a.club_name "team", a.club_info "contents", a.club_photo, a.foundation_at "date", a.ba_seq, a.ba_name "location"
+               from (select club_seq, club_name, club_info, club_photo, to_char(trunc(club_foundation_at),'yyyy-mm-dd') foundation_at,
+                     ba_seq, ba_name
+                     from tb_club club
+                     inner join tb_bowling_alley bowling
+                     on club.BOWLING_ALLEY_SEQ = bowling.ba_seq
+                     order by club_foundation_at) a
+                where rownum < 4`
+
+    oracle(sql,dataList)
+    .then((result)=>{
+        res.send(result)
+    })
+    .catch(()=>{
+
+    })
 })
 
 

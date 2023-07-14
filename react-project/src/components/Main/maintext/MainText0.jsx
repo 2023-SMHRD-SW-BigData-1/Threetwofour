@@ -7,7 +7,8 @@ const MainText0 = ({ mainText }) => {
     const nav = useNavigate()
 
     const matchTeam = (e)=>{
-        nav(`/${e}`)
+        console.log(e);
+        nav(`/clubList/${e}`)
     }
 
     return (
@@ -26,11 +27,11 @@ const MainText0 = ({ mainText }) => {
                         <div className="contents2">
                             <div>{item.team}팀</div>
                             <h3>
-                                일시 {'->'} {item.date} 장소 {'->'} {item.location}
+                                일시 {'->'} {item.date} <br />장소 {'->'} {item.location}
 
                             </h3>
                         </div>
-                        <button className="more" onClick={()=>matchTeam(`${item.num}`)}>MORE</button>
+                        <button className="more" onClick={()=>matchTeam(`${item.team}`)}>MORE</button>
                     </li>
                 )}
             </ul>

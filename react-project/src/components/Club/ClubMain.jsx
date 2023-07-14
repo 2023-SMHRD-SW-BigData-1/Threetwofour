@@ -13,14 +13,9 @@ const ClubMain = () => {
 
     useEffect(() => {
 
+        const data = JSON.parse(sessionStorage.getItem('club'))
 
-        const clubData = async () => {
-            const result = await axios.get('http://localhost:8888/DB/club')
-
-            setDataList(result.data)
-
-        }
-        clubData()
+        setDataList(data)        
 
     }, [])
 

@@ -90,8 +90,8 @@ const Login = () => {
             
 
               // 로그인 성공
-              sessionStorage.setItem('user', res.data.data.user)
-              sessionStorage.setItem('score', res.data.data.score)
+              sessionStorage.setItem('user', JSON.stringify(res.data.data.user))
+              sessionStorage.setItem('score', JSON.stringify(res.data.data.score))
 
               nav('/')
 
