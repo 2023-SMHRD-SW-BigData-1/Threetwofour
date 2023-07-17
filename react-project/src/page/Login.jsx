@@ -76,6 +76,8 @@ const Login = () => {
       axios.post('http://localhost:8888/DB/user/login', { userData: userData })
         .then((res) => {
 
+          console.log(res.data);
+
           // 로그인 성공
           if (res.data.result) {
 
