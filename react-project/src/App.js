@@ -9,6 +9,7 @@ import Logout from './page/Logout';
 import KakaoData from './components/Join/KakaoLogin/KakaoData';
 import ClubMain from './components/Club/ClubMain';
 import Community from './page/Community';
+import MatchForm from './page/MatchForm';
 
 function App(data) {
   return (
@@ -30,6 +31,8 @@ function App(data) {
           <Route path='/oauth/callback/kakao' element={<KakaoData />} />
           <Route exact path='/clubList/*' element={<ClubMain /> } />
           <Route exact path='/community/*' element={<Community /> } />
+          <Route path='/user/match' element={<MatchForm />} />
+          
         </Routes>
       </div>
       <div>

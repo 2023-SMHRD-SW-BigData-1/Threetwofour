@@ -51,6 +51,7 @@ router.post('/login', async (req, res) => {
     // let mem_pw = '1234'
     let { mem_pw, mem_id } = req.body.userData
     let dataList = [mem_id, mem_pw]
+    console.log(dataList);
     let sendData = { user: {}, score: {} }
     let acc = false
 

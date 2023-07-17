@@ -35,6 +35,12 @@ router.get('/', async (req, res) => {
 
 })
 
+router.post('/user/match', async(req, res)=>{
+    console.log('matching Router!', req.body);
+    
+})
+
+
 
 // DB 연결 함수
 const oracle = (sql, dataList) => {
