@@ -1,0 +1,292 @@
+/* MyPage.css */
+
+.mypage-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .profile-section {
+    margin-bottom: 30px;
+  }
+  
+  .profile-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .nickname {
+    margin-top: 10px;
+    font-size: 24px;
+  }
+  
+  .bio {
+    color: #4e07f3;
+  }
+  
+  .records-section,
+  .match-records-section {
+    margin-bottom: 30px;
+  }
+  
+  .records-table,
+  .match-records-list {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .records-table th,
+  .records-table td,
+  .match-records-list li {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .records-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .match-records-list li {
+    margin-bottom: 10px;
+  }
+  
+  .edit-profile-section {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    margin-bottom: 20px;
+    z-index: 999; /* 다른 요소 위에 나타나도록 z-index 설정 */
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .edit-profile-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .edit-profile-button:hover {
+    background-color: #0056b3;
+  }
+  .match-requests-section {
+    margin-bottom: 30px;
+  }
+  
+  .match-requests-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .match-requests-list li {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+  .match-requests-list li {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+  
+  .match-requests-list h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .match-requests-list p {
+    margin: 5px 0;
+    color: #555;
+  }
+  /* .data-section {
+    display: flex;
+  }
+  
+  .records-section,
+  .match-requests-section {
+    flex: 1;
+    margin-right: 20px;
+  }
+ .data-section {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .records-section {
+    flex: 1;
+  }
+  
+  .match-requests-section {
+    width: 300px;
+    margin-left: auto;
+  }
+    */
+  .data-section {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .records-section {
+    flex: 1;
+  }
+  
+  .match-requests-section {
+    width: 300px;
+  }
+
+
+  /*  */
+  .mypage-container {
+    background-color: #f8f8f8;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .edit-profile-button {
+    background-color: #70cef3;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .profile-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-card {
+    text-align: center;
+  }
+  
+  .profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .nickname {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .bio {
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .data-section {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .records-section {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .records-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .records-table th,
+  .records-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .records-table th {
+    background-color: #f5f5f5;
+    text-align: center;
+  }
+  
+  .records-table td {
+    text-align: center;
+  }
+  
+  .match-requests-section {
+    width: 300px;
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+  }
+  
+  .match-requests-list li {
+    margin-bottom: 20px;
+    margin-left: 20px;
+  }
+  
+  .match-requests-list h3 {
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .match-requests-list p {
+    color: #666;
+    margin: 0;
+  }
+  
+  .match-records-section {
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .match-records-list li {
+    margin-bottom: 20px;
+    margin-right: 100px;
+  }
+  
+  .match-records-list p {
+    color: #666;
+    margin: 0;
+  }
