@@ -36,7 +36,11 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/user/match', async(req, res)=>{
-    console.log('matching Router!', req.body);
+    // console.log('matching Router!', req.body);
+
+    let sql = 'insert into tb_match values(?,?,?,?,?,?,?)'
+    conn.query(sql,
+        [req.body.userdata.match_seq])
     
 })
 
