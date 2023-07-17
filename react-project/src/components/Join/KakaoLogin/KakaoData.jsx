@@ -66,12 +66,10 @@ const KakaoData = () => {
         }
 
         let result = (await axios.post('http://localhost:8888/DB/user/login', { userData: userData })).data
-
         // 로그인
         if (result.result) {
-            console.log(result.data);
-            sessionStorage.setItem('user', result.data.user)
-            sessionStorage.setItem('score', result.data.score)
+            sessionStorage.setItem('user', JSON.stringify(result.data.user))
+            sessionStorage.setItem('score', JSON.stringify(result.data.score))
         } else { // 회원이 없음
 
             result = (await axios.post('http://localhost:8888/DB/user/join', { userData: userData })).data
@@ -80,14 +78,13 @@ const KakaoData = () => {
 
                 result = (await axios.post('http://localhost:8888/DB/user/login', { userData: userData })).data
 
-                sessionStorage.setItem('user', result.data.user)
-                sessionStorage.setItem('score', result.data.score)
+                sessionStorage.setItem('user', JSON.stringify(result.data.user))
+                sessionStorage.setItem('score', JSON.stringify(result.data.score))
 
             }
 
         }
 
-        console.log(sessionStorage.getItem('score'));
 
         navigatioin("/");
 

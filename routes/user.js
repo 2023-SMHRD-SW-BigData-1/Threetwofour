@@ -57,14 +57,16 @@ router.post('/login', async (req, res) => {
 
     console.log('login 시도');
 
+    console.log(dataList);
     // sql문 로직 작성
     let sql = 'select * from tb_member where mem_id = :mem_id and mem_pw = :mem_pw'
 
     // DB 연결 시도
-    oracle(sql, dataList)
+    await oracle(sql, dataList)
         .then((result) => {
+            console.log(result.length);
             sendData.user = result
-            if(result.length > 0){
+            if (result.length > 0) {
                 acc = true
             }
         })
@@ -74,6 +76,7 @@ router.post('/login', async (req, res) => {
 
 
     dataList = [mem_id, mem_id]
+    console.log(dataList);
 
     sql = `SELECT g.game_seq,g.game_no,m.match_at,
                 SUM(g.p01_score + g.p02_score + g.p03_score + g.p04_score + g.p05_score + g.p06_score + g.p07_score + g.p08_score + g.p09_score + g.p10_score + g.p11_score + g.p12_score) AS pScoreSum, 
@@ -83,20 +86,20 @@ router.post('/login', async (req, res) => {
                 FROM tb_match mt,
                     (SELECT PROPOSER_SEQ FROM tb_matcher WHERE mem_id = :mem_id) me,
                     (SELECT ACCEPTOR_SEQ FROM tb_acceptor WHERE mem_id = :mem_id) acc
-                WHERE mt.PROPOSER_SEQ = me.PROPOSER_SEQ AND mt.ACCEPTOR_SEQ = acc.ACCEPTOR_SEQ) m
+                WHERE mt.PROPOSER_SEQ = me.PROPOSER_SEQ or mt.ACCEPTOR_SEQ = acc.ACCEPTOR_SEQ) m
             WHERE g.match_seq = m.match_seq
             GROUP BY (g.game_seq,g.game_no),(m.match_at)
             order by g.game_seq`
 
-    oracle(sql, dataList)
+    await oracle(sql, dataList)
         .then((result) => {
             sendData.score = result;
-            res.json({ result: acc, data: sendData })
         })
         .catch((error) => {
             res.status(500).send(error.message)
         })
 
+    res.json({ result: acc, data: sendData })
 
 })
 // 로그인 끝
