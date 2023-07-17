@@ -145,7 +145,7 @@ const Community = () => {
     ]
 
     const borderAxios = async () => {
-      const result = await axios.get('')
+      const result = await axios.get('http://localhost:8888/DB/community/')
       console.log(result);
     }
 
@@ -156,6 +156,7 @@ const Community = () => {
     }
 
     setData(garaDataList)
+    borderAxios()
 
 
   }, [])
