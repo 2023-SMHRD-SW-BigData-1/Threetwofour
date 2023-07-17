@@ -16,7 +16,7 @@
   background: #70cef3;
 }
 
-form {
+#matchForm {
   padding: 25px;
   background: #fff;
   max-width: 500px;
@@ -25,54 +25,53 @@ form {
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
 }
 
-form h2 {
+#matchForm h2 {
   font-size: 27px;
   text-align: center;
   margin: 0px 0 30px;
 }
 
-form .form-group {
+#matchForm .form-group {
   margin-bottom: 15px;
   position: relative;
 }
 
-form label {
+#matchForm label {
   display: block;
   font-size: 15px;
   margin-bottom: 7px;
 }
 
-form input,
-form select {
+#matchForm input,
+#matchForm select {
   height: 45px;
   padding: 10px;
   width: 100%;
   font-size: 15px;
   outline: none;
-  background: #fff;
   border-radius: 3px;
   border: 1px solid #bfbfbf;
 }
 
-form input:focus,
-form select:focus {
+#matchForm input:focus,
+#matchForm select:focus {
   border-color: #9a9a9a;
 }
 
-form input.error,
-form select.error {
+#matchForm input.error,
+#matchForm select.error {
   border-color: #f91919;
   background: #f9f0f1;
 }
 
-form small {
+#matchForm small {
   font-size: 14px;
   margin-top: 5px;
   display: block;
   color: #f91919;
 }
 
-form .password i {
+#matchForm .password i {
   position: absolute;
   right: 0px;
   height: 45px;
@@ -107,7 +106,7 @@ form .password i {
   background: #a3ddda;
 }
 
-form .matchDateTime{
+#matchForm .matchDateTime{
   display: flex;
     flex-direction: row;
 }
