@@ -67,6 +67,12 @@
     margin-bottom: 20px;
     z-index: 999; /* 다른 요소 위에 나타나도록 z-index 설정 */
   }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
   
   .edit-profile-button {
     background-color: #007bff;
