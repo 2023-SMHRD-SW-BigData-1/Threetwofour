@@ -10,7 +10,6 @@ const MainText = () => {
     const [mainText0, setMainText0] = useState([])
 
     useEffect(() => {
-        console.log(JSON.parse(sessionStorage.getItem('clubMore')));
 
         setMainText0(JSON.parse(sessionStorage.getItem('clubMore')))
 

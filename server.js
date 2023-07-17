@@ -10,6 +10,7 @@ const webSocket = require('./socket')
 const matchRouter = require('./routes/match')
 const bowlingAlleyRouter = require('./routes/bowlinAlley')
 const clubRouter = require('./routes/club')
+const communityRouter = require('./routes/community')
 
 
 app.set('port', process.env.PORT || 8888)
@@ -30,6 +31,7 @@ app.use((urlText+'/user'), userRouter)
 app.use((urlText+'/match'),matchRouter)
 app.use((urlText+'/bowlingAlley'),bowlingAlleyRouter)
 app.use((urlText+'/club'),clubRouter)
+app.use(urlText+'/community', communityRouter)
 
 const server = app.listen(app.get('port'), () => {
     console.log(app.get('port'), '번 포트에서 서버연결 대기중...');

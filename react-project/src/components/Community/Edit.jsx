@@ -1,0 +1,62 @@
+import React, { useEffect, useRef, useState } from 'react'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+
+const Edit = () => {
+    const nav = useNavigate()
+    const { num } = useParams()
+    const location = useLocation()
+
+    const [borderInfo, setBorderInfo] = useState(location.state.data)
+
+    const titleRef = useRef()
+    const writerRef = useRef()
+    const dateRef = useRef()
+    const contentRef = useRef()
+
+    useEffect(() => {
+        titleRef.current.value = borderInfo.title
+        writerRef.current.value = borderInfo.writer
+        contentRef.current.value = borderInfo.content
+        dateRef.current.value = borderInfo.date
+    }, [])
+
+    return (
+
+        <div className="board_wrap">
+            <div className="board_title">
+                <strong>게시판 이름</strong>
+                <p>게시판 설명</p>
+            </div>
+            <div className="board_write_wrap">
+                <div className="board_write">
+                    <div className="title">
+                        <dl>
+                            <dt>제목</dt>
+                            <dd><input type="text" placeholder="제목 입력" ref={titleRef} readOnly /></dd>
+                        </dl>
+                    </div>
+                    <div className="info">
+                        <dl>
+                            <dt>글쓴이</dt>
+                            <dd><input type="text" placeholder="글쓴이 입력" ref={writerRef} readOnly /></dd>
+                        </dl>
+                        <dl>
+                            <dt>작성날짜</dt>
+                            <dd><input type="text" placeholder="비밀번호 입력" ref={dateRef} /></dd>
+                        </dl>
+                    </div>
+                    <div className="cont">
+                        <textarea placeholder="내용 입력" ref={contentRef} />
+                    </div>
+                </div>
+                <div className="bt_wrap">
+
+                    <button className='on'>수정</button>
+                    <button onClick={() => nav('/community/view/' + num, { state: { data: borderInfo } })}>취소</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Edit
