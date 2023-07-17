@@ -67,7 +67,7 @@
     margin-bottom: 20px;
     z-index: 999; /* 다른 요소 위에 나타나도록 z-index 설정 */
   }
-  .header {
+  .mypage-container > .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,13 +162,6 @@
     background-color: #f8f8f8;
     padding: 20px;
     color: #333;
-  }
-  
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
   }
   
   h1 {
