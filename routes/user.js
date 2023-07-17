@@ -84,7 +84,7 @@ router.post('/login', async (req, res) => {
             FROM tb_game g,
                 (SELECT *
                 FROM tb_match mt,
-                    (SELECT PROPOSER_SEQ FROM tb_matcher WHERE mem_id = :mem_id) me,
+                    (SELECT PROPOSER_SEQ FROM tb_proposer WHERE mem_id = :mem_id) me,
                     (SELECT ACCEPTOR_SEQ FROM tb_acceptor WHERE mem_id = :mem_id) acc
                 WHERE mt.PROPOSER_SEQ = me.PROPOSER_SEQ or mt.ACCEPTOR_SEQ = acc.ACCEPTOR_SEQ) m
             WHERE g.match_seq = m.match_seq
