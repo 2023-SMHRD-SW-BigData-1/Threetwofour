@@ -12,6 +12,7 @@ import Community from './page/Community';
 import MatchForm from './page/MatchForm';
 import MyPage from './page/MyPage';
 import BowlingAlley from './page/BowlingAlley';
+import Bowling_Rating from './page/Bowling-Rating';
 
 function App(data) {
   return (
@@ -37,6 +38,7 @@ function App(data) {
           <Route path='/user/mypage' element={<MyPage />} />
           <Route path='/user/BowlingAlley/' element={<BowlingAlley />} />
           <Route path='/user/BowlingAlley/:addr' element={<BowlingAlley />} />
+          <Route path='/rating' element={<Bowling_Rating />} />
           
         </Routes>
       </div>
