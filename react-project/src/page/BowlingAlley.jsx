@@ -3,7 +3,6 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
-import '../css/BowlingAlley.css'
 import { useParams, Link } from 'react-router-dom';
 
 const BowlingTable = () => {
