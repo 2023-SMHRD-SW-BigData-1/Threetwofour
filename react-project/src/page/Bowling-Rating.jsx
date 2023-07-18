@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import '../css/Bowling-Rating.css'
+import '../css/Bowling-Rating.css'
 
 
 function Bowling_Rating() {
@@ -53,35 +53,49 @@ function Bowling_Rating() {
 
   
   return (
-    <div className="App">
+    <div className="ratingstart">
       <h1>볼링장 평가</h1>
       <div className="rating">
     
       </div>
-      <br></br>
-      <br></br>
+      
+      
 
       {ratings.map((rating, index) => (
-        <div key={index} className="rating">
-           <p>{rating.name}</p>
+           <>
+
+          
+        <div key={index} className="ratingstar">
+        <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+
+           <h3>{rating.name}</h3>
           {[5,4,3,2,1].map((value) => (
             <React.Fragment key={value}>
               <input
-                type="radio"
+                type="checkbox"
                 id={`star${index + 1}-${value}`}
-                name={`rating${index + 1}`}
+                name={`rating${index + 1}-${value}`}
                 value={value}
                 checked={rating.value === value}
                 onChange={() => handleRatingChange(index, value)}
-              />
+                />
               <label htmlFor={`star${index + 1}-${value}`}></label>
             </React.Fragment>
           ))}
          
         </div>
+          </>
       ))}
+      <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
       <div className="comment">
-        <h4>하고싶은말을 자유롭게 적어주세요</h4>
+        <h3>하고싶은말을 자유롭게 적어주세요</h3>
         <textarea
           name="기타평가"
           rows="4"
@@ -91,7 +105,7 @@ function Bowling_Rating() {
         ></textarea>
       </div>
       <br></br>
-      <button onClick={handleSubmit}>평가 제출</button>
+      <button className='ratingbutton' onClick={handleSubmit}>평가 제출</button>
     </div>
   );
 }
