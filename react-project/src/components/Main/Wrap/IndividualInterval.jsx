@@ -17,10 +17,10 @@ const IndividualIntervals = () => {
     return (
         <Carousel activeIndex={index} onSelect={handleSelect} style={{height:'-webkit-fill-available'}}>
                 <Carousel.Item >
-                    <CardWrap imgSrc={firstImg} />
+                    <CardWrap imgSrc={firstImg} text={'Wrap/CardWrap.jsx 에 있는 텍스트'} />
                 </Carousel.Item>
                 <Carousel.Item>
-                    <CardWrap imgSrc={secondImg} />
+                    <CardWrap imgSrc={secondImg} text={'test'} />
                 </Carousel.Item>
         </Carousel >
     );

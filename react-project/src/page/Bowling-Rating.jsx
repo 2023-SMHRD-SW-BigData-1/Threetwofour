@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import './App.css';
 import axios from 'axios';
+// import '../css/Bowling-Rating.css'
 
 
-
-function App() {
+function Bowling_Rating() {
   const [ratings, setRatings] = useState([
-    { name: '?볼링레인은 어떠셨나요', value: 0 },
-    { name: '?볼링공의 상태나 신발은 만족하시나요', value: 0 },
-    { name: '?화장실 및 부대시설은 깔끔했나요', value: 0 },
-    { name: '?직원의 고객응대는 친절했나요', value: 0 },
+    { name: '볼링레인은 어떠셨나요?', value: 0 },
+    { name: '볼링공의 상태나 신발은 만족하시나요?', value: 0 },
+    { name: '화장실 및 부대시설은 깔끔했나요?', value: 0 },
+    { name: '직원의 고객응대는 친절했나요?', value: 0 },
     
   ]);
   const [comment, setComment] = useState('');
@@ -39,7 +38,7 @@ function App() {
       service: ratings[3],
       comment: comment,
     };
-    axios.post('http://localhost:8888/api/ratings', data)
+    axios.post('http://localhost:8888/rating', data)
   .then(response => {
     // 서버 응답 처리
     console.log(response.data.message);
@@ -97,5 +96,5 @@ function App() {
   );
 }
 
-export default App;
+export default Bowling_Rating;
 

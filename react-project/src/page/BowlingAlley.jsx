@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
+import '../css/BowlingAlley.css'
 import { useParams, Link } from 'react-router-dom';
 
 const BowlingTable = () => {
@@ -82,6 +83,7 @@ const BowlingTable = () => {
         return sizes[regions.find((region) => region.name === regionName)?.size] || 'table-small';
     };
 
+    
     return (
         <div>
             <h1>볼링장 정보</h1>
@@ -130,7 +132,7 @@ const BowlingTable = () => {
                             <td>{bowling.BA_MONITOR}</td>
                             <td>{bowling.BA_LANE}</td>
                             <td>{bowling.BA_LANETYPE}</td>
-                            <td>평점</td>
+                            <td><button >평점</button></td>
                         </tr>
                     ))}
                 </tbody>

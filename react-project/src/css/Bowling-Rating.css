@@ -1,0 +1,106 @@
+/* 전체 앱 컨테이너에 대한 스타일링 */
+.App {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+  }
+  
+  /* 제목에 대한 스타일링 */
+  h1 {
+    color: #333;
+  }
+  
+  /* 각 평가 섹션에 대한 스타일링 */
+  .rating {
+    display: flex;
+    
+    align-items: center;
+    margin-bottom: 50px;
+  }
+
+  .rating p {
+    margin-bottom: 10px;
+    margin-right: 50px;
+    font-weight: bold;
+    
+  }
+  
+  /* 별점에 대한 스타일링 */
+
+  .rating-stars {
+    display: flex;
+    /* 별점을 가로로 배열하고 간격 조정 */
+    gap: 30px; /* 별 간격을 30px로 설정 */
+  }
+  input[type="radio"] {
+    display: none;
+  }
+  
+  /* label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 70%;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  } */
+  label {
+    position: relative; /* 가상 요소를 배치하기 위해 필요한 위치 속성 */
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    color: #e60d0d;
+  }
+  
+  label::before{
+    content: '\2764'; /* 별 모양을 유니코드로 지정 */
+    position: absolute; /* 가상 요소를 label에 상대적으로 배치 */
+    top: 0;
+    left: 0;
+    font-size: 30px; /* 별의 크기를 조정 */
+    opacity: 0.2; /* 불활성 별의 투명도 설정 */
+    transition: opacity 0.3s;
+  }
+  input[type="radio"]:checked + label::before {
+    opacity: 2; /* 선택된 별의 투명도 설정 */
+    /* background-color: #ff9800; */
+  }
+  /* input[type="radio"]:checked + label {
+   
+  } */
+  
+  /* 코멘트 섹션에 대한 스타일링 */
+  .comment {
+    margin-top: 20px;
+  }
+  
+  h4 {
+    margin-bottom: 10px;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+ 
+  }
+  
+  /* 제출 버튼에 대한 스타일링 */
+  button {
+    padding: 10px 20px;
+    background-color: #70cef3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  /* button:hover {
+    background-color: #45a049;
+  }
+   */
