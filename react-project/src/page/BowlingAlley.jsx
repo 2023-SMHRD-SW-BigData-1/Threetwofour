@@ -3,9 +3,13 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
-// import '../css/BowlingAlley.css'
+import { useParams, Link } from 'react-router-dom';
 
 const BowlingTable = () => {
+
+    const { addr } = useParams()
+
+    console.log(addr);
     const regions = [
         { name: '서울', size: 'large' },
         { name: '인천', size: 'medium' },
@@ -25,25 +29,44 @@ const BowlingTable = () => {
         { name: '제주', size: 'small' },
     ];
 
+    const [list, setList] = useState([])
     const [selectedRegion, setSelectedRegion] = useState(null);
-    const [bowlingData, setBowlingData] = useState({});
+    const [bowlingData, setBowlingData] = useState([]);
 
     useEffect(() => {
         const fetchBowlingData = async () => {
-            try {
-                const response = await axios.get('/bowling'); // 볼링장 정보를 가져오는 API 엔드포인트로 요청합니다.
-                setBowlingData(response.data);
-            } catch (error) {
-                console.error('Error fetching bowling data:', error);
-            }
+            const response = (await axios.get('http://localhost:8888/DB/bowlingAlley/bowling')).data; // 볼링장 정보를 가져오는 API 엔드포인트로 요청합니다.
+
+            await setBowlingData(response);
+
         };
 
         fetchBowlingData();
+
+        console.log('bowlingData', bowlingData);
     }, []);
+
+
+    useEffect(() => {
+
+        setList([])
+        console.log('response', bowlingData);
+
+        console.log('filter', bowlingData.filter(item => item.BA_ADDR.includes(addr)))
+
+
+        setList(bowlingData.filter(item => item.BA_ADDR.includes(addr || '서울')))
+
+        console.log(list[selectedRegion]);
+        console.log(selectedRegion);
+
+    }, [addr, bowlingData])
 
     const handleRegionClick = (regionName) => {
         setSelectedRegion(regionName);
     };
+
+
 
     const getTableSize = (regionName) => {
         const sizes = {
@@ -69,47 +92,49 @@ const BowlingTable = () => {
                 </form>
             </div>
             <nav>
-                <Nav variant="pills" defaultActiveKey="#first">
+                <Nav variant="pills" defaultActiveKey="#first" style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around'
+                }}>
                     {regions.map((region) => (
                         <Nav.Item key={region.name}>
-                            <Nav.Link href={'#' + region.name} onClick={() => handleRegionClick(region.name)}>
+                            <Link to={'/user/BowlingAlley/' + region.name} onClick={() => handleRegionClick(region.name)}>
                                 {region.name}
-                            </Nav.Link>
+                            </Link>
                         </Nav.Item>
                     ))}
                 </Nav>
             </nav>
 
-            {selectedRegion && (
-                <Table striped bordered hover responsive>
-                    <thead>
-                        <tr>
-                            <th>볼링장명</th>
-                            <th>연락처</th>
-                            <th>주소</th>
-                            <th>핀 세터</th>
-                            <th>모니터</th>
-                            <th>레인 수</th>
-                            <th>레인 타입</th>
-                            <th>평점</th>
+            <Table striped bordered hover responsive>
+                <thead>
+                    <tr>
+                        <th>볼링장명</th>
+                        <th>연락처</th>
+                        <th>주소</th>
+                        <th>핀 세터</th>
+                        <th>모니터</th>
+                        <th>레인 수</th>
+                        <th>레인 타입</th>
+                        <th>평점</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {list.map((bowling) => (
+                        <tr key={bowling.BA_SEQ}>
+                            <td>{bowling.BA_NAME}</td>
+                            <td>{bowling.BA_TEL}</td>
+                            <td>{bowling.BA_ADDR}</td>
+                            <td>{bowling.BA_MACHINE}</td>
+                            <td>{bowling.BA_MONITOR}</td>
+                            <td>{bowling.BA_LANE}</td>
+                            <td>{bowling.BA_LANETYPE}</td>
+                            <td>평점</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {bowlingData[selectedRegion]?.map((bowling) => (
-                            <tr key={bowling.name}>
-                                <td>{bowling.name}</td>
-                                <td>{bowling.contact}</td>
-                                <td>{bowling.address}</td>
-                                <td>{bowling.pinSetter}</td>
-                                <td>{bowling.monitor}</td>
-                                <td>{bowling.lanes}</td>
-                                <td>{bowling.laneType}</td>
-                                <td>평점</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            )}
+                    ))}
+                </tbody>
+            </Table>
         </div>
     );
 };

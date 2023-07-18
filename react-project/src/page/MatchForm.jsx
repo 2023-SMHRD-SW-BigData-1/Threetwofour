@@ -51,9 +51,9 @@ const MatchForm = () => {
 
     const handleData = () => {
 
-        let str1 = '부산 기장군 기장읍 차성로 314'
+        // let str1 = '부산 기장군 기장읍 차성로 314'
 
-        console.log(str1.includes('부산'));
+        // console.log(str1.includes('부산'));
 
 
         setUserDate({
