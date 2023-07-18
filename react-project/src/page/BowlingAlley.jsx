@@ -86,7 +86,7 @@ const BowlingTable = () => {
         <div>
             <h1>볼링장 정보</h1>
             <div>
-                <form action="/user/BowlingAlley">
+                <form action="/bowlingAlley">
                     <input type="search" placeholder="볼링장명을 입력하세요" name="search" />
                     <button type="submit">검색</button>
                 </form>
@@ -99,7 +99,7 @@ const BowlingTable = () => {
                 }}>
                     {regions.map((region) => (
                         <Nav.Item key={region.name}>
-                            <Link to={'/user/BowlingAlley/' + region.name} onClick={() => handleRegionClick(region.name)}>
+                            <Link to={'/bowlingAlley/' + region.name} onClick={() => handleRegionClick(region.name)}>
                                 {region.name}
                             </Link>
                         </Nav.Item>
