@@ -24,8 +24,8 @@ const Edit = () => {
 
         <div className="board_wrap">
             <div className="board_title">
-                <strong>게시판 이름</strong>
-                <p>게시판 설명</p>
+                <strong>자유게시판</strong>
+                <p>궁금한 게 있으면 글 남겨주세요!</p>
             </div>
             <div className="board_write_wrap">
                 <div className="board_write">

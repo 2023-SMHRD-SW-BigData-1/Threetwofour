@@ -22,7 +22,7 @@ const MatchForm = () => {
         mem_part: '', // 팀or개인 -> 변수에 담아서 데이터 넘기기
         lane_seq: '', // -> 어느 볼링장에서 할 거야?
 
-        gameMode: ''
+        // gameMode: ''
         // mem_proposer : '',
         // mem_acceptor : '',
         // startDate: '',
@@ -50,11 +50,6 @@ const MatchForm = () => {
     }
 
     const handleData = () => {
-
-        // let str1 = '부산 기장군 기장읍 차성로 314'
-
-        // console.log(str1.includes('부산'));
-
 
         setUserDate({
 
@@ -91,7 +86,6 @@ const MatchForm = () => {
                         // 매칭 신청 성공
                         console.log('userDate success');
 
-
                     })
                 } else {
                     Swal.fire({
@@ -103,7 +97,6 @@ const MatchForm = () => {
                     }).then((res) => {
                         // 매칭 신청 실패
                         console.log('failed');
-
                     })
                 }
             })
@@ -128,7 +121,6 @@ const MatchForm = () => {
                             data={userData.lane_seq}
                         />
                     </div>
-
                     <div className='matchDateTime'>
                         <div className='form-group date'>
                             매칭날짜
@@ -140,7 +132,6 @@ const MatchForm = () => {
                                 locale={ko}
                             />
                         </div>
-
                         <div className='form-group time'>
                             매칭시간
                             <DatePicker
