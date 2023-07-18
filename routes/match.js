@@ -35,20 +35,41 @@ router.get('/', async (req, res) => {
 
 })
 
-router.post('/user/match', async(req, res)=>{
-    // console.log('matching Router!', req.body);
+router.post('/insert', (req, res) => {
+    console.log(req.body);
 
-    let sql = 'insert into tb_match values(?,?,?,?,?,?,?)'
-    conn.query(sql,
-        [req.body.userdata.match_seq])
     
+    // lane_seq 가져오는 방법
+    `select lane.lane_seq
+    from tb_lane lane
+    inner join tb_bowling_alley bowling
+    on lane.ba_sea = bowling.ba_seq
+    where bowling.ba_name like '%:볼링장이름%'`
+    
+    // tb_proposer 회원 정보 가져오는 방법
+    `select proposer_seq from tb_proposer where mem_id = :mem_id`
+    
+    // tb_proposer 회원이 없을 경우
+    `insert into tb_proposer(mem_id) values(:mem_id);`
+    
+    // tb_acceptor 회원 정보 가져오는 방법
+    `select acceptor_seq from tb_acceptor where mem_id = :mem_id`
+    
+    // tb_acceptor 회원이 없을 경우
+    `insert into tb_acceptor(mem_id) values(:mem_id);`
+    
+    // tb_match에 데이터 입력하는 방법
+    // '2023-07-18T00:41:29.977Z' 문자를 올바르게 Date 타입으로 넣기 위한 문장
+    // to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')
+    `insert into tb_match(lane_seq, mem_part, proposer_seq, acceptor_seq, reg_at, match_at)
+    values(:lane_seq, :mem_part,:proposer_seq,:acceptor_seq,sysdate,to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS'))`
 })
-
 
 
 // DB 연결 함수
 const oracle = (sql, dataList) => {
 
+    // sql = 'insert into tb_match(match_seq, lane_seq, mem_part, proposer_seq, acceptor_seq, matchDate, match_At) values(:match_seq,:lane_seq, :mem_part, :proposer_seq, :acceptor_seq, :matchDate, :match_At)'
     return new Promise((resolve, reject) => {
         // DB 연결 시도
         oracledb.getConnection(db_config, (error, conn) => {
@@ -62,9 +83,12 @@ const oracle = (sql, dataList) => {
                 // sql문 실행 실패
                 if (err) throw err;
 
+
                 if (Object.keys(result).includes('rows')) {
 
                     console.log('rows가 있음');
+                    console.log('--------------------------');
+
 
                     // 성공 후 로직
 
@@ -74,6 +98,7 @@ const oracle = (sql, dataList) => {
                     // 보낼 값
 
                     resolve(result.rows)
+                    console.log('보내졌어여');
                 }
 
                 if (Object.keys(result).includes('rowsAffected')) {
@@ -100,7 +125,7 @@ const oracle = (sql, dataList) => {
     })
 
 }
-
+console.log('--------------------------');
 
 // DB 연결 해제 함수
 const connRelase = (conn) => {

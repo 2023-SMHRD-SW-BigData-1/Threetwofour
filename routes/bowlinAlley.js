@@ -4,7 +4,7 @@ const db_config = require('../config/dbconfig')
 const oracledb = require('oracledb')
 
 
-router.get('/', async (req, res) => {
+router.get('/bowling', async (req, res) => {
 
     let dataList = []
 
@@ -89,9 +89,5 @@ const connRelase = (conn) => {
         console.log('DB 연결 해제');
     })
 }
-
-
-
-
 
 module.exports = router

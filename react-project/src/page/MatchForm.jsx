@@ -14,75 +14,100 @@ import axios from 'axios'
 const MatchForm = () => {
 
     const [userData, setUserDate] = useState({
-        mem_region: '',
 
         mem_proposer: '', // sessionStorge('user')
         mem_acceptor: '', //=> 이전페이지 -> 회원클릭 -> 그 회원정보 => 어떻게 넘기고 받아올 건가
         matchDate: '', // -> 매칭 신청 날짜 ; sysdate
-        acceptTime: '', // -> 어디에 저장하지? -> 신청 받은 사람이 수락했을 때 저장할 수 있게
-        personnel: '', // 팀or개인 -> 변수에 담아서 데이터 넘기기
-        matchAt: '', // -> 어느 볼링장에서 할 거야?
+        match_At: new Date(), // -> 어디에 저장하지? -> 신청 받은 사람이 수락했을 때 저장할 수 있게
+        mem_part: '', // 팀or개인 -> 변수에 담아서 데이터 넘기기
+        lane_seq: '', // -> 어느 볼링장에서 할 거야?
+
+        gameMode: ''
+        // mem_proposer : '',
+        // mem_acceptor : '',
+        // startDate: '',
+
     })
 
-    const regionRef = useRef();
-
+    const lane_seqRef = useRef();
     const bow_allRef = useRef();
-
-    const personnelRef = useRef();
+    const mem_partRef = useRef();
+    const gameModeRef = useRef();
+    const betRef = useRef();
     const [teamValid, setTeamValid] = useState(false)
 
     const [select, setSelect] = useState();
     const [startDate, setStartDate] = useState(new Date());
 
     const nav = useNavigate()
-    
+    const userInfo = JSON.parse(sessionStorage.getItem('user'))[0]
+
     const selecOptionhandler = (e) => {
         setSelect(e.target.value);
-        console.log(personnelRef.current.value)
 
-        if (personnelRef.current.value === 'team') { setTeamValid(true) }
+        if (mem_partRef.current.value === 'team') { setTeamValid(true) }
         else { setTeamValid(false) }
     }
 
-    const handleData = (e) => {
-        setUserDate({
-            mem_region: ''
+    const handleData = () => {
 
+        let str1 = '부산 기장군 기장읍 차성로 314'
+
+        console.log(str1.includes('부산'));
+
+
+        setUserDate({
+
+            mem_proposer: userInfo,
+            mem_acceptor: 10,
+            matchDate: startDate, // 시간
+            match_At: startDate, // 시간
+            mem_part: mem_partRef.current.value, // 회원유형(팀, 개인)
+            lane_seq: lane_seqRef.current.value, // 레인 고유번호
+            gameMode: 'gameModeRef.current.value' // 게임 모드
         })
+
+        console.log(userData);
     }
 
-    const submitButton = () => {
+    const submitButton = (e) => {
 
-            axios.post('http://localhost:8888/DB/match/', { userData: userData })
-                .then((res) => {
-                    if (res.data) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '신청 확인',
-                            text: '매칭 신청이 되었습니다.',
-                            showCancelButton: false,
-                            submitButton: '확인'
-                        }).then((res) => {
+        e.preventDefault()
 
-                            // sessionStorage.setItem('user')
-                            sessionStorage.getItem('user')
-                            nav('/')
-                            // 매칭 신청 성공
+        axios.post('http://localhost:8888/DB/match/insert', { userData: userData })
+            .then((res) => {
+                if (res.data) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '신청 확인',
+                        text: '매칭 신청이 되었습니다.',
+                        showCancelButton: false,
+                        submitButton: '확인'
+                    }).then((res) => {
 
-                        })
-                    } else { 
-                        Swal.fire({
-                            icon: 'error',
-                            title: '신청 취소',
-                            text: '매칭 신청을 취소하셨습니다.',
-                            showCancelButton: false,
-                            submitButton: '확인'
-                        }).then((res) => {
-                            // 매칭 신청 실패
-                        })
-                    }
-                })
-                .catch(() => { console.error('Faied to matchApplication') })
+                        // sessionStorage.setItem('user')
+                        sessionStorage.getItem('user')
+                        nav('/')
+                        // 매칭 신청 성공
+                        console.log('userDate success');
+
+
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '신청 취소',
+                        text: '매칭 신청을 취소하셨습니다.',
+                        showCancelButton: false,
+                        submitButton: '확인'
+                    }).then((res) => {
+                        // 매칭 신청 실패
+                        console.log('failed');
+
+                    })
+                }
+            })
+            .catch((err) => { console.error('Faied to matchApplication', err) })
     }
 
     return (
@@ -95,12 +120,12 @@ const MatchForm = () => {
                 <div>
                     <div className='form-group region'>
                         <Input
-                            text={['지역']}
-                            ref={regionRef}
+                            text={['지역 볼링장']}
+                            ref={lane_seqRef}
                             type={'text'}
-                            placeholder={'경기하고 싶은 지역을 기입해주세요.'}
-                            onChange={handleData}
-                            data={userData.mem_region}
+                            placeholder={'경기하고 싶은 볼링장명을 기입해주세요.'}
+                            handleData={handleData}
+                            data={userData.lane_seq}
                         />
                     </div>
 
@@ -131,13 +156,34 @@ const MatchForm = () => {
                             />
                         </div>
                     </div>
-                    
+
+                    {/* <div className='form-group gamemode'>
+                        친선모드 / 경쟁모드
+                        <select
+                            onChange={handleData}
+                            ref={gameModeRef}>
+                            <option value="">모드를 선택하세요</option>
+                            <option value="friendlyMode">친선모드</option>
+                            <option value="competitionMode">경쟁모드</option>
+                        </select>
+                    </div>
+                    <div className='form-group bet'>
+                         내기모드 선택
+                        <select
+                            onChange={handleData}
+                            ref={betRef}>
+                            <option value="">내기를 하시겠습니까?</option>
+                            <option value="friendlyMode">내기 O</option>
+                            <option value="competitionMode">내기 X</option>
+                        </select>
+                    </div> */}
+
                     <div className='form-group personnel'>
                         개인, 팀
                         <select
                             id='personnel'
                             onChange={selecOptionhandler}
-                            ref={personnelRef}>
+                            ref={mem_partRef}>
                             <option value="">개인, 팀 중 선택하세요</option>
                             <option value="individual">개인</option>
                             <option value="team">팀</option>

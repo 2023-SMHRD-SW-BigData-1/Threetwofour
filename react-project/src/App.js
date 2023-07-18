@@ -11,6 +11,7 @@ import ClubMain from './components/Club/ClubMain';
 import Community from './page/Community';
 import MatchForm from './page/MatchForm';
 import MyPage from './page/MyPage';
+import BowlingAlley from './page/BowlingAlley';
 
 function App(data) {
   return (
@@ -34,6 +35,7 @@ function App(data) {
           <Route exact path='/community/*' element={<Community /> } />
           <Route path='/user/match' element={<MatchForm />} />
           <Route path='/user/mypage' element={<MyPage />} />
+          <Route path='/user/BowlingAlley' element={<BowlingAlley />} />
           
         </Routes>
       </div>

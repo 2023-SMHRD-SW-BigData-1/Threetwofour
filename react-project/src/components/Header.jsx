@@ -30,6 +30,7 @@ const Header = () => {
                         <li><Link to={'/clubList/'}>JOIN CLUB</Link></li>
                         <li><Link to={'/user/match/'}>SERVICE</Link></li>
                         <li><Link to={'/community/'}>COMMUNITY</Link></li>
+                        <li><Link to={'/rating'}>RATING</Link></li>
                         {!sessionStorage.getItem('user') ?
                             <>
                                 <li><Link to={'/user/join'}>JOIN</Link></li>
