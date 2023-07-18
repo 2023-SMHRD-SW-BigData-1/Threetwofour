@@ -31,7 +31,7 @@ const BowlingTable = () => {
     useEffect(() => {
         const fetchBowlingData = async () => {
             try {
-                const response = await axios.get('/api/bowling'); // 볼링장 정보를 가져오는 API 엔드포인트로 요청합니다.
+                const response = await axios.get('/bowling'); // 볼링장 정보를 가져오는 API 엔드포인트로 요청합니다.
                 setBowlingData(response.data);
             } catch (error) {
                 console.error('Error fetching bowling data:', error);
@@ -62,6 +62,12 @@ const BowlingTable = () => {
     return (
         <div>
             <h1>볼링장 정보</h1>
+            <div>
+                <form action="/user/BowlingAlley">
+                    <input type="search" placeholder="볼링장명을 입력하세요" name="search" />
+                    <button type="submit">검색</button>
+                </form>
+            </div>
             <nav>
                 <Nav variant="pills" defaultActiveKey="#first">
                     {regions.map((region) => (
@@ -107,5 +113,7 @@ const BowlingTable = () => {
         </div>
     );
 };
+
+
 
 export default BowlingTable;
