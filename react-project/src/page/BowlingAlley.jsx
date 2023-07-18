@@ -3,7 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
-import '../css/BowlingAlley.css'
+// import '../css/BowlingAlley.css'
 
 const BowlingTable = () => {
     const regions = [

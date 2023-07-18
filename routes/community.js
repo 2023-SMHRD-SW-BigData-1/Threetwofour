@@ -13,11 +13,19 @@ router.get('/', async (req, res) => {
 
     await oracle(sql, dataList)
         .then((result) => {
-            console.log(result);
+            res.send(result)
         })
         .catch(() => {
             res.status(500).send(error.message)
         })
+})
+
+router.post('/input', async (req,res)=>{
+
+    console.log(req.body);
+    let dataList = []
+
+    let sql = "insert into tb_board(bo_subject, mem_id, bo_content, bo_filename, bo_regdate, bo_modidate, bo_count) values(:title,:memId, :boContent,:boFilename, sysdate, sysdate, 0)"
 })
 
 // DB 연결 함수
