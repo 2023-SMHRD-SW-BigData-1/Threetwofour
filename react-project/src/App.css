@@ -146,7 +146,7 @@ h1 {
 .navList>li>a:hover {
   color: #00f;
   font-weight: bold;
-  font-size: 1.7rem;
+  transform: scale(1.5)
 }
 
 
