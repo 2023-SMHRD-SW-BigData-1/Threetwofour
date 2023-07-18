@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import FileDropUpload from './components/FileDropUpload'
 
 const Write = () => {
 
@@ -34,7 +35,6 @@ const Write = () => {
             fileName: ''
         })
         // console.log('빈 파일', file);
-        console.log('filed',fileRef.current.files);
         // setFile(fileRef.current.files[0])
         // console.log('이 파일은 : ', file);
     }
@@ -72,7 +72,7 @@ const Write = () => {
                         </dl>
                         <dl>
                             <dt>첨부파일</dt>
-                            <dd><input type="file" placeholder="첨부파일 등록" accept='/image/*' ref={fileRef} /></dd>
+                            <dd><input type="file" placeholder="첨부파일 등록" accept='/image/*' /></dd>
                         </dl>
                     </div>
                     <div className="cont">
@@ -81,21 +81,19 @@ const Write = () => {
                     <div className='info' style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        justifyContent: 'space-evenly',
+                        justifyContent: 'flex-start',
                         flexWrap: 'nowrap'
                     }}>
                         <dl style={{ width: 'auto' }}>
                             <dt>첨부파일</dt>
                         </dl>
                         <dl style={{
-                            width: '-webkit-fill-available',
                             display: 'flex',
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'space-between'
                         }}>
-                            <dd style={{ width: '100%' }}><input style={{ width: '100%' }} type="text" placeholder='파일을 첨부 할 수 있습니다.' /></dd>
-                            <dd><input style={{ paddingLeft: '20px' }} type="file" name="" id="" /></dd>
+                            <dd style={{ width: '100%' }}><FileDropUpload /></dd>
                         </dl>
                     </div>
                 </div>

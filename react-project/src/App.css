@@ -146,7 +146,7 @@ h1 {
 .navList>li>a:hover {
   color: #00f;
   font-weight: bold;
-  font-size: 1.7rem;
+  transform: scale(1.5)
 }
 
 
@@ -526,4 +526,9 @@ nav{
   background-color: rgba(0, 0, 0, 0.0) !important;
   padding: 9px 0 0 0 !important;
   margin: 0 !important;
+}
+
+.dzu-previewContainer > img{
+  width: 100%;
+  height: -webkit-fill-available;
 }
