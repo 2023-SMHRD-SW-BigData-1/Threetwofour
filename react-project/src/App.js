@@ -35,7 +35,8 @@ function App(data) {
           <Route exact path='/community/*' element={<Community /> } />
           <Route path='/user/match' element={<MatchForm />} />
           <Route path='/user/mypage' element={<MyPage />} />
-          <Route path='/user/BowlingAlley' element={<BowlingAlley />} />
+          <Route path='/user/BowlingAlley/' element={<BowlingAlley />} />
+          <Route path='/user/BowlingAlley/:addr' element={<BowlingAlley />} />
           
         </Routes>
       </div>
