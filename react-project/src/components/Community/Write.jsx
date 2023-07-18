@@ -1,47 +1,107 @@
-import React, { useRef } from 'react'
+import axios from 'axios'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Write = () => {
 
     const titleRef = useRef()
-    const writerRef = useRef()
-    const dateRef = useRef()
+    const fileRef = useRef()
     const contentRef = useRef()
+
+    const userInfo = JSON.parse(sessionStorage.getItem('user'))[0] 
+
+    const [boardInfo, setBoardInfo] = useState({
+        title: '',
+        memId: userInfo.MEM_ID,
+        content: '',
+        fileName: ''
+    })
+
+    console.log();
+
+    useEffect(() => {
+
+        console.log(boardInfo);
+    }, [boardInfo])
+
+    // const [file, setFile] = useState<File>(null);
+
+    const boardHandler = () => {
+        setBoardInfo({
+            title: titleRef.current.value,
+            memId: userInfo.MEM_ID,
+            content: contentRef.current.value,
+            fileName: ''
+        })
+        // console.log('빈 파일', file);
+        console.log('filed',fileRef.current.files);
+        // setFile(fileRef.current.files[0])
+        // console.log('이 파일은 : ', file);
+    }
+
+    const uploadBoard = () => {
+        const boardAxios = async ()=>{
+            const result = (await axios.post('http://localhost:8888/DB/community/input', boardInfo)).data
+            console.log(result);
+        }
+
+        boardAxios()
+    }
 
 
     return (
 
 
-        <div class="board_wrap">
-            <div class="board_title">
+        <div className="board_wrap">
+            <div className="board_title">
                 <strong>게시판 이름</strong>
                 <p>게시판 설명</p>
             </div>
-            <div class="board_write_wrap">
-                <div class="board_write">
-                    <div class="title">
+            <div className="board_write_wrap">
+                <div className="board_write">
+                    <div className="title">
                         <dl>
                             <dt>제목</dt>
-                            <dd><input type="text" placeholder="제목 입력" /></dd>
+                            <dd><input type="text" placeholder="제목 입력" ref={titleRef} onChange={boardHandler} /></dd>
                         </dl>
                     </div>
-                    <div class="info">
+                    <div className="info">
                         <dl>
                             <dt>글쓴이</dt>
-                            <dd><input type="text" placeholder="글쓴이 입력" /></dd>
+                            <dd><input type="text" placeholder={userInfo.MEM_NICK} readOnly /></dd>
                         </dl>
                         <dl>
-                            <dt>비밀번호</dt>
-                            <dd><input type="password" placeholder="비밀번호 입력" /></dd>
+                            <dt>첨부파일</dt>
+                            <dd><input type="file" placeholder="첨부파일 등록" accept='/image/*' ref={fileRef} /></dd>
                         </dl>
                     </div>
-                    <div class="cont">
-                        <textarea placeholder="내용 입력"></textarea>
+                    <div className="cont">
+                        <textarea placeholder="내용 입력" onChange={boardHandler} ref={contentRef}></textarea>
+                    </div>
+                    <div className='info' style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
+                        flexWrap: 'nowrap'
+                    }}>
+                        <dl style={{ width: 'auto' }}>
+                            <dt>첨부파일</dt>
+                        </dl>
+                        <dl style={{
+                            width: '-webkit-fill-available',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between'
+                        }}>
+                            <dd style={{ width: '100%' }}><input style={{ width: '100%' }} type="text" placeholder='파일을 첨부 할 수 있습니다.' /></dd>
+                            <dd><input style={{ paddingLeft: '20px' }} type="file" name="" id="" /></dd>
+                        </dl>
                     </div>
                 </div>
-                <div class="bt_wrap">
+                <div className="bt_wrap">
 
-                    <button className='on'>등록</button>
+                    <button className='on' onClick={uploadBoard}>등록</button>
                     <Link to={'/community/'}>취소</Link>
                 </div>
             </div>

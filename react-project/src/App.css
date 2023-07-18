@@ -508,5 +508,12 @@ nav{
   font-size: 50px;
 }
 .pagination{
+  display: flex !important;
   justify-content: center;
+}
+
+.page-link{
+  background-color: rgba(0, 0, 0, 0.0) !important;
+  padding: 9px 0 0 0 !important;
+  margin: 0 !important;
 }
