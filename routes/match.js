@@ -66,6 +66,7 @@ router.post('/insert', async (req, res) => {
             where ba_name like '%' || :lane_seq || '%'`
     await oracle(sql, dataList)
         .then((result) => {
+            console.log('BA_SEQ',result);
             finalData = [
                 ...finalData,
                 result[0].BA_SEQ
