@@ -35,37 +35,157 @@ router.get('/', async (req, res) => {
 
 })
 
-router.post('/insert', (req, res) => {
-    console.log(req.body);
+router.post('/insert', async (req, res) => {
+    // console.log(req.body);
+    const { mem_proposer, mem_acceptor, matchDate, match_At, mem_part, lane_seq, gameMode } = req.body.userData
+    // console.log(
+    //     mem_proposer, // 신청자
+    //     mem_acceptor, // 수락자
+    //     matchDate, // 매칭일자
+    //     match_At, // 매칭일자
+    //     mem_part, // 회원구분
+    //     lane_seq, // 레인 번호
+    //     gameMode // 게임모드
+    // );
 
-    
+    let sql = ''
+    let dataList = []
+
+    let finalData = []
+
     // lane_seq 가져오는 방법
-    `select lane.lane_seq
-    from tb_lane lane
-    inner join tb_bowling_alley bowling
-    on lane.ba_sea = bowling.ba_seq
-    where bowling.ba_name like '%:볼링장이름%'`
-    
+    dataList = [lane_seq]
+    sql = `select ba_seq
+            from tb_bowling_alley
+            where ba_name like '%' || :lane_seq || '%'`
+    await oracle(sql, dataList)
+        .then((result) => {
+            finalData = [
+                ...finalData,
+                result[0].BA_SEQ
+            ]
+        })
+        .catch((error) => {
+            res.status(500).send(error.message)
+        })
+
+
+    finalData = [
+        ...finalData,
+        'm'
+    ]
+
     // tb_proposer 회원 정보 가져오는 방법
-    `select proposer_seq from tb_proposer where mem_id = :mem_id`
-    
-    // tb_proposer 회원이 없을 경우
-    `insert into tb_proposer(mem_id) values(:mem_id);`
-    
+    dataList = [mem_proposer.MEM_ID]
+    sql = `select proposer_seq from tb_proposer where mem_id = :mem_id`
+
+    await oracle(sql, dataList)
+        .then(async (result) => {
+            console.log(result);
+            // tb_proposer 회원이 있을 경우
+            if (result.length > 0) {
+                finalData = [
+                    ...finalData,
+                    result[0].PROPOSER_SEQ
+                ]
+            }
+            else {
+
+                // tb_proposer 회원이 없을 경우
+                dataList = [mem_proposer.MEM_ID]
+                sql = `insert into tb_proposer(mem_id) values(:mem_id)`
+                await oracle(sql, dataList)
+                    .then(async (result) => {
+                        if (result) {
+                            dataList = [mem_proposer.MEM_ID]
+                            sql = `select proposer_seq from tb_proposer where mem_id = :mem_id`
+                            await oracle(sql, dataList)
+                                .then((result) => {
+                                    if (result.length > 0) {
+                                        finalData = [
+                                            ...finalData,
+                                            result[0].PROPOSER_SEQ
+                                        ]
+                                    }
+                                })
+                                .catch((error) => {
+                                    res.status(500).send(error.message)
+                                })
+
+                        }
+                    })
+                    .catch((error) => {
+                        res.status(500).send(error.message)
+                    })
+
+            }
+            console.log('완료');
+        })
+        .catch((error) => {
+            res.status(500).send(error.message)
+        })
+
+
     // tb_acceptor 회원 정보 가져오는 방법
-    `select acceptor_seq from tb_acceptor where mem_id = :mem_id`
-    
-    // tb_acceptor 회원이 없을 경우
-    `insert into tb_acceptor(mem_id) values(:mem_id);`
-    
+    dataList = [mem_proposer.MEM_ID]
+    sql = `select acceptor_seq from tb_acceptor where mem_id = :mem_id`
+
+    await oracle(sql, dataList)
+        .then(async (result) => {
+            console.log(result);
+            // tb_proposer 회원이 있을 경우
+            if (result.length > 0) {
+                finalData = [
+                    ...finalData,
+                    result[0].ACCEPTOR_SEQ
+                ]
+            }
+            else {
+
+                // tb_acceptor 회원이 없을 경우
+                dataList = [mem_proposer.MEM_ID]
+                sql = `insert into tb_acceptor(mem_id) values(:mem_id)`
+                await oracle(sql, dataList)
+                    .then(async (result) => {
+                        if (result) {
+                            dataList = [mem_proposer.MEM_ID]
+                            sql = `select tb_acceptor from tb_acceptor where mem_id = :mem_id`
+                            await oracle(sql, dataList)
+                                .then((result) => {
+                                    if (result.length > 0) {
+                                        finalData = [
+                                            ...finalData,
+                                            result[0].ACCEPTOR_SEQ
+                                        ]
+                                    }
+                                })
+                                .catch((error) => {
+                                    res.status(500).send(error.message)
+                                })
+
+                        }
+                    })
+                    .catch((error) => {
+                        res.status(500).send(error.message)
+                    })
+
+            }
+        })
+        .catch((error) => {
+            res.status(500).send(error.message)
+        })
+
+    finalData = [
+        ...finalData,
+        matchDate
+    ]
+
     // tb_match에 데이터 입력하는 방법
     // '2023-07-18T00:41:29.977Z' 문자를 올바르게 Date 타입으로 넣기 위한 문장
     // to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')
-    `insert into tb_match(lane_seq, mem_part, proposer_seq, acceptor_seq, reg_at, match_at)
+    dataList = finalData
+    sql = `insert into tb_match(ba_seq, mem_part, proposer_seq, acceptor_seq, reg_at, match_at)
     values(:lane_seq, :mem_part,:proposer_seq,:acceptor_seq,sysdate,to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS'))`
-    
-
-    
 })
 
 
