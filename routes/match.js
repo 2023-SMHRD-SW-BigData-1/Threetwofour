@@ -65,53 +65,108 @@ router.post('/insert', async (req, res) => {
             from tb_bowling_alley
             where ba_name like '%' || :lane_seq || '%'`
     await oracle(sql, dataList)
-        .then((result) => {
-            finalData = [
-                ...finalData,
-                result[0].BA_SEQ
-            ]
-        })
-        .catch((error) => {
-            res.status(500).send(error.message)
-        })
-
-
-    finalData = [
-        ...finalData,
-        'm'
-    ]
-
-    // tb_proposer 회원 정보 가져오는 방법
-    dataList = [mem_proposer.MEM_ID]
-    sql = `select proposer_seq from tb_proposer where mem_id = :mem_id`
-
-    await oracle(sql, dataList)
-        .then(async (result) => {
+        .then( async (result) => {
             console.log(result);
-            // tb_proposer 회원이 있을 경우
+
             if (result.length > 0) {
                 finalData = [
                     ...finalData,
-                    result[0].PROPOSER_SEQ
+                    result[0].BA_SEQ
                 ]
-            }
-            else {
 
-                // tb_proposer 회원이 없을 경우
+                finalData = [
+                    ...finalData,
+                    'm'
+                ]
+
+                // tb_proposer 회원 정보 가져오는 방법
                 dataList = [mem_proposer.MEM_ID]
-                sql = `insert into tb_proposer(mem_id) values(:mem_id)`
+                sql = `select proposer_seq from tb_proposer where mem_id = :mem_id`
+
                 await oracle(sql, dataList)
                     .then(async (result) => {
-                        if (result) {
+                        console.log(result);
+                        // tb_proposer 회원이 있을 경우
+                        if (result.length > 0) {
+                            finalData = [
+                                ...finalData,
+                                result[0].PROPOSER_SEQ
+                            ]
+                        }
+                        else {
+
+                            // tb_proposer 회원이 없을 경우
                             dataList = [mem_proposer.MEM_ID]
-                            sql = `select proposer_seq from tb_proposer where mem_id = :mem_id`
+                            sql = `insert into tb_proposer(mem_id) values(:mem_id)`
                             await oracle(sql, dataList)
-                                .then((result) => {
-                                    if (result.length > 0) {
-                                        finalData = [
-                                            ...finalData,
-                                            result[0].PROPOSER_SEQ
-                                        ]
+                                .then(async (result) => {
+                                    if (result) {
+                                        dataList = [mem_proposer.MEM_ID]
+                                        sql = `select proposer_seq from tb_proposer where mem_id = :mem_id`
+                                        await oracle(sql, dataList)
+                                            .then((result) => {
+                                                if (result.length > 0) {
+                                                    finalData = [
+                                                        ...finalData,
+                                                        result[0].PROPOSER_SEQ
+                                                    ]
+                                                }
+                                            })
+                                            .catch((error) => {
+                                                res.status(500).send(error.message)
+                                            })
+
+                                    }
+                                })
+                                .catch((error) => {
+                                    res.status(500).send(error.message)
+                                })
+
+                        }
+                        console.log('완료');
+                    })
+                    .catch((error) => {
+                        res.status(500).send(error.message)
+                    })
+
+
+                // tb_acceptor 회원 정보 가져오는 방법
+                dataList = [mem_proposer.MEM_ID]
+                sql = `select acceptor_seq from tb_acceptor where mem_id = :mem_id`
+
+                await oracle(sql, dataList)
+                    .then(async (result) => {
+                        console.log(result);
+                        // tb_proposer 회원이 있을 경우
+                        if (result.length > 0) {
+                            finalData = [
+                                ...finalData,
+                                result[0].ACCEPTOR_SEQ
+                            ]
+                        }
+                        else {
+
+                            // tb_acceptor 회원이 없을 경우
+                            dataList = [mem_proposer.MEM_ID]
+                            sql = `insert into tb_acceptor(mem_id) values(:mem_id)`
+                            await oracle(sql, dataList)
+                                .then(async (result) => {
+                                    if (result) {
+                                        dataList = [mem_proposer.MEM_ID]
+                                        sql = `select tb_acceptor from tb_acceptor where mem_id = :mem_id`
+                                        await oracle(sql, dataList)
+                                            .then((result) => {
+                                                if (result.length > 0) {
+                                                    finalData = [
+                                                        ...finalData,
+                                                        result[0].ACCEPTOR_SEQ
+                                                    ]
+                                                }
+                                            })
+                                            .catch((error) => {
+                                                res.status(500).send(error.message)
+                                            })
+
                                     }
                                 })
                                 .catch((error) => {
@@ -124,83 +179,38 @@ router.post('/insert', async (req, res) => {
                         res.status(500).send(error.message)
                     })
 
-            }
-            console.log('완료');
-        })
-        .catch((error) => {
-            res.status(500).send(error.message)
-        })
-
-
-    // tb_acceptor 회원 정보 가져오는 방법
-    dataList = [mem_proposer.MEM_ID]
-    sql = `select acceptor_seq from tb_acceptor where mem_id = :mem_id`
-
-    await oracle(sql, dataList)
-        .then(async (result) => {
-            console.log(result);
-            // tb_proposer 회원이 있을 경우
-            if (result.length > 0) {
                 finalData = [
                     ...finalData,
-                    result[0].ACCEPTOR_SEQ
+                    match_At
                 ]
-            }
-            else {
 
-                // tb_acceptor 회원이 없을 경우
-                dataList = [mem_proposer.MEM_ID]
-                sql = `insert into tb_acceptor(mem_id) values(:mem_id)`
+                // tb_match에 데이터 입력하는 방법
+                // '2023-07-18T00:41:29.977Z' 문자를 올바르게 Date 타입으로 넣기 위한 문장
+                // to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')
+                dataList = finalData
+                sql = `insert into tb_match(ba_seq, mem_part, proposer_seq, acceptor_seq, reg_at, match_at)
+                values(:lane_seq, :mem_part,:proposer_seq,:acceptor_seq,sysdate,to_date(:match_at,'yyyy-mm-dd hh24:mi:ss'))`
+
+                console.log(finalData);
                 await oracle(sql, dataList)
-                    .then(async (result) => {
-                        if (result) {
-                            dataList = [mem_proposer.MEM_ID]
-                            sql = `select tb_acceptor from tb_acceptor where mem_id = :mem_id`
-                            await oracle(sql, dataList)
-                                .then((result) => {
-                                    if (result.length > 0) {
-                                        finalData = [
-                                            ...finalData,
-                                            result[0].ACCEPTOR_SEQ
-                                        ]
-                                    }
-                                })
-                                .catch((error) => {
-                                    res.status(500).send(error.message)
-                                })
-
-                        }
+                    .then((result) => {
+                        res.send(result)
                     })
                     .catch((error) => {
                         res.status(500).send(error.message)
                     })
 
+
+            } else {
+                res.send(false)
             }
         })
         .catch((error) => {
             res.status(500).send(error.message)
         })
 
-    finalData = [
-        ...finalData,
-        match_At
-    ]
 
-    // tb_match에 데이터 입력하는 방법
-    // '2023-07-18T00:41:29.977Z' 문자를 올바르게 Date 타입으로 넣기 위한 문장
-    // to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')
-    dataList = finalData
-    sql = `insert into tb_match(ba_seq, mem_part, proposer_seq, acceptor_seq, reg_at, match_at)
-    values(:lane_seq, :mem_part,:proposer_seq,:acceptor_seq,sysdate,to_date(:match_at,'yyyy-mm-dd hh24:mi:ss'))`
 
-    console.log(finalData);
-    await oracle(sql, dataList)
-        .then((result) => {
-            res.send(result)
-        })
-        .catch((error) => {
-            res.status(500).send(error.message)
-        })
 
 })
 
