@@ -27,12 +27,14 @@ router.get('/', async (req, res) => {
     await oracle(sql, dataList)
         .then((result) => {
             sendData.todayGames = result
-            res.send(sendData)
+
         })
         .catch((error) => {
             res.status(500).send(error.message)
         })
 
+    console.log(sendData.todayGames);
+    res.send(sendData)
 })
 
 router.post('/insert', async (req, res) => {
@@ -47,6 +49,10 @@ router.post('/insert', async (req, res) => {
     //     lane_seq, // 레인 번호
     //     gameMode // 게임모드
     // );
+
+    console.log('matchDate', matchDate);
+    console.log('match_At', match_At);
+
 
     let sql = ''
     let dataList = []
@@ -177,7 +183,7 @@ router.post('/insert', async (req, res) => {
 
     finalData = [
         ...finalData,
-        matchDate
+        match_At
     ]
 
     // tb_match에 데이터 입력하는 방법
@@ -185,7 +191,17 @@ router.post('/insert', async (req, res) => {
     // to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')
     dataList = finalData
     sql = `insert into tb_match(ba_seq, mem_part, proposer_seq, acceptor_seq, reg_at, match_at)
-    values(:lane_seq, :mem_part,:proposer_seq,:acceptor_seq,sysdate,to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS'))`
+    values(:lane_seq, :mem_part,:proposer_seq,:acceptor_seq,sysdate,to_date(:match_at,'yyyy-mm-dd hh24:mi:ss'))`
+
+    console.log(finalData);
+    await oracle(sql, dataList)
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((error) => {
+            res.status(500).send(error.message)
+        })
+
 })
 
 
