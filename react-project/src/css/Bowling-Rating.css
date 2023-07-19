@@ -1,5 +1,5 @@
 /* 전체 앱 컨테이너에 대한 스타일링 */
-.App {
+.ratingstart {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 20px;
@@ -30,9 +30,11 @@
   .rating-stars {
     display: flex;
     /* 별점을 가로로 배열하고 간격 조정 */
+    /* text-align: center; */
+    /* align-items: center; */
     gap: 30px; /* 별 간격을 30px로 설정 */
   }
-  input[type="radio"] {
+  input[type="checkbox"] {
     display: none;
   }
   
@@ -56,18 +58,20 @@
   
   label::before{
     content: '\2764'; /* 별 모양을 유니코드로 지정 */
-    position: absolute; /* 가상 요소를 label에 상대적으로 배치 */
+    /* position: absolute;  */
+    
     top: 0;
     left: 0;
     font-size: 30px; /* 별의 크기를 조정 */
+   
     opacity: 0.2; /* 불활성 별의 투명도 설정 */
     transition: opacity 0.3s;
   }
-  input[type="radio"]:checked + label::before {
+  input[type="checkbox"]:checked + label::before {
     opacity: 2; /* 선택된 별의 투명도 설정 */
     /* background-color: #ff9800; */
   }
-  /* input[type="radio"]:checked + label {
+  /* input[type="checkbox"]:checked + label {
    
   } */
   
@@ -89,7 +93,7 @@
   }
   
   /* 제출 버튼에 대한 스타일링 */
-  button {
+  .ratingbutton{
     padding: 10px 20px;
     background-color: #70cef3;
     color: #fff;
