@@ -131,7 +131,7 @@ const BowlingTable = () => {
                             <td>{bowling.BA_MONITOR}</td>
                             <td>{bowling.BA_LANE}</td>
                             <td>{bowling.BA_LANETYPE}</td>
-                            <td><button >평점</button></td>
+                            <td><button>평점</button></td>
                         </tr>
                     ))}
                 </tbody>
