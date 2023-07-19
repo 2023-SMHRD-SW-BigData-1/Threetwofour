@@ -4,7 +4,7 @@ import MyImage from '../../img/BowlingShadow.png'
 import Community from './components/Community'
 import Page from './components/Page'
 import './css/css.css'
-const CommunityList = ({data, pageNo, setData, setPageNo}) => {
+const CommunityList = ({ data, pageNo, setData, setPageNo }) => {
 
 
     return (
@@ -14,11 +14,13 @@ const CommunityList = ({data, pageNo, setData, setPageNo}) => {
                 <strong>SPARECITY COMMUNITY</strong>
                 <p>자유롭게 소통하세요.</p>
             </div>
-            <img src={MyImage} alt="" width="200px" height="200px" />
-            <img src={MyImage} alt="" width="200px" height="200px" style={{ marginLeft: '-10' }} />
-            <img src={MyImage} alt="" width="200px" height="200px" style={{ marginLeft: '0' }} />
-            <img src={MyImage} alt="" width="200px" height="200px" style={{ marginLeft: '0' }} />
-            <img src={MyImage} alt="" width="200px" height="200px" style={{ marginLeft: '0' }} />
+            <div style={{display:'flex'}}>
+                <img src={MyImage} alt="" width="200px" height="200px" />
+                <img src={MyImage} alt="" width="200px" height="200px" style={{ marginLeft: '-10' }} />
+                <img src={MyImage} alt="" width="200px" height="200px" style={{ marginLeft: '0' }} />
+                <img src={MyImage} alt="" width="200px" height="200px" style={{ marginLeft: '0' }} />
+                <img src={MyImage} alt="" width="200px" height="200px" style={{ marginLeft: '0' }} />
+            </div>
 
             <div className="board_list_wrap">
                 <div className="board_list">

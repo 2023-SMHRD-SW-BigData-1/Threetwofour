@@ -1,23 +1,42 @@
+import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Edit = () => {
     const nav = useNavigate()
     const { num } = useParams()
-    const location = useLocation()
 
-    const [borderInfo, setBorderInfo] = useState(location.state.data)
+    const [boardInfo, setBoardInfo] = useState({})
+    const [imgSrc, setImgSrc] = useState('')
+    const [updateInfo, setUpdateInfo] = useState({})
 
     const titleRef = useRef()
     const writerRef = useRef()
     const dateRef = useRef()
     const contentRef = useRef()
 
+    const viewAxios = async () => {
+        const result = (await axios.get('http://localhost:8888/DB/community/view/' + num)).data
+        setBoardInfo(result.boardInfo)
+
+        if (result.boardInfo.imgSrc) {
+            setImgSrc(result.boardInfo.imgSrc.split('public')[1])
+        }
+        console.log('페이지 불러옴');
+        titleRef.current.value =boardInfo.title
+        writerRef.current.value =boardInfo.writer
+        contentRef.current.value =boardInfo.content
+        dateRef.current.value =boardInfo.date
+    }
+
+    const handler = () =>{
+        setUpdateInfo({
+            content: contentRef.current.value
+        })
+    }
+
     useEffect(() => {
-        titleRef.current.value = borderInfo.title
-        writerRef.current.value = borderInfo.writer
-        contentRef.current.value = borderInfo.content
-        dateRef.current.value = borderInfo.date
+        viewAxios()
     }, [])
 
     return (
@@ -46,13 +65,13 @@ const Edit = () => {
                         </dl>
                     </div>
                     <div className="cont">
-                        <textarea placeholder="내용 입력" ref={contentRef} />
+                        <textarea placeholder="내용 입력" ref={contentRef} onChange={handler} />
                     </div>
                 </div>
                 <div className="bt_wrap">
 
                     <button className='on'>수정</button>
-                    <button onClick={() => nav('/community/view/' + num, { state: { data: borderInfo } })}>취소</button>
+                    <button onClick={() => nav('/community/view/' + num, { state: { data:boardInfo } })}>취소</button>
                 </div>
             </div>
         </div>
