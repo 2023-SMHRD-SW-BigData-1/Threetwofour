@@ -63,6 +63,9 @@ router.post('/insert', (req, res) => {
     // to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')
     `insert into tb_match(lane_seq, mem_part, proposer_seq, acceptor_seq, reg_at, match_at)
     values(:lane_seq, :mem_part,:proposer_seq,:acceptor_seq,sysdate,to_date(to_char(to_timestamp_tz(:match_AT, 'YYYY-MM-DD"T"HH24:MI:SS.FFTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS'))`
+    
+
+    
 })
 
 
