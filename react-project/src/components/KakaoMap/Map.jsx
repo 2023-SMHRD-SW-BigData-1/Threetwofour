@@ -27,7 +27,7 @@ const Map = ({ value, count }) => {
   const container = useRef(null) // 지도에 담을 DOM 레퍼런스
   const mapOption = { // 지도를 생성할 때 필요한 기본 옵션
     center: new window.kakao.maps.LatLng(35.145891002745046, 126.93082094990004), // 지도의 중심좌표
-    level: 3, // 지도의 확대 레벨
+    level: 10, // 지도의 확대 레벨
   };
 
 

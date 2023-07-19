@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
     return (
         <div className="footer">
-            <div>LOGO</div>
+            <div>SPARECITY</div>
             <div>
                 스마트인재개발원 324팀<br />
                 팀장 조서연<br />

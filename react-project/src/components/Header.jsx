@@ -28,7 +28,7 @@ const Header = () => {
                     <ul className="navList">
                         <li><Link to={'/'}>HOME</Link></li>
                         <li><Link to={'/clubList/'}>JOIN CLUB</Link></li>
-                        <li><Link to={'/user/match/'}>SERVICE</Link></li>
+                        <li><Link to={'/user/match/'}>MATCH</Link></li>
                         <li><Link to={'/community/'}>COMMUNITY</Link></li>
                         <li><Link to={'/rating'}>RATING</Link></li>
                         {!sessionStorage.getItem('user') ?

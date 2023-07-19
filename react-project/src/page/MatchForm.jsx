@@ -58,7 +58,7 @@ const MatchForm = () => {
 
         let year = (dateList[0].replace('년',''))
         let month = (dateList[1].replace('월',''))
-        let day = (dateList[2].replace('일',''))
+        let day = (dateList[2].replace('일', ''))
 
         let timeList = String(timeRef.current.input.value).split(' ')
         let hour = ''
@@ -68,6 +68,8 @@ const MatchForm = () => {
             hour = (timeList[1].replace('시',''))
         }
         let minite = (timeList[2].replace('분',''))
+
+        
 
         setUserDate({
             mem_proposer: userInfo,
@@ -157,7 +159,7 @@ const MatchForm = () => {
                 if (res.data) {
                     Swal.fire({
                         icon: 'success',
-                        title: '신청 확인',
+                        title: '매칭 신청',
                         text: '매칭 신청이 되었습니다.',
                         showCancelButton: false,
                         submitButton: '확인'
@@ -173,8 +175,8 @@ const MatchForm = () => {
                 } else {
                     Swal.fire({
                         icon: 'error',
-                        title: '신청 취소',
-                        text: '매칭 신청을 취소하셨습니다.',
+                        title: '매칭 신청',
+                        text: '매칭 신청에 실패 하셨습니다.',
                         showCancelButton: false,
                         submitButton: '확인'
                     }).then((res) => {
