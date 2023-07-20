@@ -38,7 +38,7 @@ function App(data) {
           <Route path='/user/mypage' element={<MyPage />} />
           <Route path='/bowlingAlley/' element={<BowlingAlley />} />
           <Route path='/bowlingAlley/:addr' element={<BowlingAlley />} />
-          <Route path='/rating' element={<Bowling_Rating />} />
+          <Route path='/rating/*' element={<Bowling_Rating />} />
           
         </Routes>
       </div>
