@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
                from tb_board board
                inner join tb_member member
                on board.mem_id = member.mem_id
-               order by board.bo_seq`
+               order by board.bo_seq desc`
 
     await oracle(sql, dataList)
         .then((result) => {
