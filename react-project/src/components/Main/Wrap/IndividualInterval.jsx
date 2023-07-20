@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import firstImg from '../../../img/Spin.jpg'
-import secondImg from '../../../img/intro.png'
+import secondImg from '../../../img/benning.jpg'
 import CardWrap from './CardWrap';
 import CardGroup from 'react-bootstrap/CardGroup';
 
