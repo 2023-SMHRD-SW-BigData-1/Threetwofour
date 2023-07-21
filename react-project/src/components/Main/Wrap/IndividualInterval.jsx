@@ -25,7 +25,7 @@ const IndividualIntervals = () => {
         </Carousel >
     );
 }
-
+ 
 
 
 export default IndividualIntervals;
